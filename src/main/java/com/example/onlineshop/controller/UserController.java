@@ -1,12 +1,8 @@
 package com.example.onlineshop.controller;
 
-import com.example.onlineshop.model.entity.User;
+import com.example.onlineshop.collection.entity.User;
 import com.example.onlineshop.service.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -16,5 +12,10 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @PostMapping("/create")
+    public User createUser(@RequestBody User user){
+        return userService.save(user);
     }
 }

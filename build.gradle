@@ -3,6 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '3.0.1'
 	id 'io.spring.dependency-management' version '1.1.0'
 	id 'org.graalvm.buildtools.native' version '0.9.18'
+	id "io.freefair.lombok" version "6.6.1"
 }
 
 group = 'com.example'
@@ -22,9 +23,16 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.5.3.Final'
+	implementation group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.5.3.Final'
+	implementation 'org.projectlombok:lombok:1.18.24'
+	implementation group: 'org.projectlombok', name: 'lombok-mapstruct-binding', version: '0.2.0'
+	annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
+	annotationProcessor "org.mapstruct:mapstruct-processor:1.5.3.Final"
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testAnnotationProcessor "org.mapstruct:mapstruct-processor:1.5.3.Final"
 }
 
 tasks.named('test') {

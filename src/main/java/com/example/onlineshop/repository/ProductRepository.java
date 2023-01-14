@@ -1,7 +1,7 @@
 package com.example.onlineshop.repository;
 
-import com.example.onlineshop.collection.entity.Category;
-import com.example.onlineshop.collection.entity.Product;
+import com.example.onlineshop.collection.document.Category;
+import com.example.onlineshop.collection.document.Product;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

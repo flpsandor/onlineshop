@@ -2,6 +2,7 @@ package com.example.onlineshop.configuration;
 
 import com.example.onlineshop.mapper.CategoryMapper;
 import com.example.onlineshop.mapper.ProductMapper;
+import com.example.onlineshop.mapper.UserMapper;
 import org.springframework.context.annotation.Bean;
 
 public class MapperConfiguration {
@@ -13,5 +14,10 @@ public class MapperConfiguration {
     @Bean
     CategoryMapper categoryMapper(){
         return CategoryMapper.INSTANCE;
+    }
+
+    @Bean
+    UserMapper userMapper(){
+        return UserMapper.INSTANCE;
     }
 }

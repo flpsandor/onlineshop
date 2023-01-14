@@ -1,4 +1,4 @@
-package com.example.onlineshop.collection.entity;
+package com.example.onlineshop.collection.document;
 
 
 import lombok.AllArgsConstructor;
@@ -21,7 +21,6 @@ public class Product {
     private String productName;
     private String productDescription;
     private Double productPrice;
-
     @DBRef
     private Category productCategory;
 }

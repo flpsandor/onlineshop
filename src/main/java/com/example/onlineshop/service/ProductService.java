@@ -3,7 +3,7 @@ package com.example.onlineshop.service;
 import com.example.onlineshop.collection.dto.CategoryDto;
 import com.example.onlineshop.collection.dto.ProductCreationDto;
 import com.example.onlineshop.collection.dto.ProductDto;
-import com.example.onlineshop.collection.entity.Product;
+import com.example.onlineshop.collection.document.Product;
 import com.example.onlineshop.exception.CategoryNotExist;
 import com.example.onlineshop.exception.CategoryNotValid;
 import com.example.onlineshop.exception.ProductNotExist;

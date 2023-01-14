@@ -60,7 +60,7 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/{id}/update")
+    @PatchMapping("/{id}/update")
     public UserWithAddressDto updateUser(@PathVariable ("id") String id, @Valid @RequestBody UserUpdateDto userUpdateDto) throws UserNotExist {
         return userService.updateUser(id, userUpdateDto);
     }

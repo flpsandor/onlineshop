@@ -97,8 +97,8 @@ public class UserService {
     public UserWithAddressDto updateUser(String id, UserUpdateDto userUpdateDto) throws UserNotExist {
         var userDb = userRepository.findById(id).orElseThrow(UserNotExist::new);
         var user = userMapper.userUpdateDtoToUser(userUpdateDto);
-        // check and upadate
-
-        return userMapper.userToUserWithAddressDto(userDb);
+        user.setUserType(userDb.getUserType());
+        user.setUserId(userDb.getUserId());
+        return userMapper.userToUserWithAddressDto(user);
     }
 }

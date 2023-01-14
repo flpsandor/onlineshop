@@ -49,7 +49,7 @@ public class ProductController {
 
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     @PatchMapping("/{id}/update")
-    public Product updateProduct(@PathVariable String id, @Valid @RequestBody Product product) throws ProductNotExist {
+    public ProductDto updateProduct(@PathVariable String id, @Valid @RequestBody Product product) throws ProductNotExist {
         return productService.update(id,product);
     }
 

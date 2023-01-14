@@ -39,19 +39,14 @@ public class ProductService {
         return products.stream().map(productMapper::productToProductDto).toList();
     }
 
-    public Product update(String productId, Product product) throws ProductNotExist {
+    public ProductDto update(String productId, Product product) throws ProductNotExist {
         var productDb = productRepository.findById(productId).orElseThrow(ProductNotExist::new);
-        if (product.getProductName() != null) {
-            productDb.setProductName(product.getProductName());
-        }
-        if (product.getProductDescription() != null) {
-            productDb.setProductDescription(product.getProductDescription());
-        }
-        if (product.getProductPrice() != null) {
-            productDb.setProductPrice(product.getProductPrice());
-        }
+        productDb.setProductName(product.getProductName());
+        productDb.setProductDescription(product.getProductDescription());
+        productDb.setProductPrice(product.getProductPrice());
+        productDb.setProductCategory(product.getProductCategory());
         productRepository.save(productDb);
-        return productDb;
+        return productMapper.productToProductDto(productDb);
     }
 
     public ProductDto findProductById(String id) throws ProductNotExist {

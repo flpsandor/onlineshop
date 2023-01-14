@@ -8,6 +8,7 @@ import com.example.onlineshop.exception.CategoryNotExist;
 import com.example.onlineshop.exception.CategoryNotValid;
 import com.example.onlineshop.exception.ProductNotExist;
 import com.example.onlineshop.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,13 +43,13 @@ public class ProductController {
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping("/add")
-    public ProductDto addProduct(@RequestBody ProductCreationDto product) throws CategoryNotValid {
+    public ProductDto addProduct(@Valid @RequestBody ProductCreationDto product) throws CategoryNotValid {
         return productService.addProduct(product);
     }
 
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     @PatchMapping("/{id}/update")
-    public Product updateProduct(@PathVariable String id, @RequestBody Product product) throws ProductNotExist {
+    public Product updateProduct(@PathVariable String id, @Valid @RequestBody Product product) throws ProductNotExist {
         return productService.update(id,product);
     }
 
@@ -65,7 +66,7 @@ public class ProductController {
     }
 
     @PostMapping("/category/add")
-    public CategoryDto addCategory(@RequestBody CategoryDto category){
+    public CategoryDto addCategory(@Valid @RequestBody CategoryDto category){
         return productService.addCategory(category);
     }
 

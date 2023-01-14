@@ -46,7 +46,6 @@ public interface UserMapper {
     @Mapping(source = "firstName", target = "userFirstName")
     @Mapping(source = "lastName", target = "userLastName")
     @Mapping(source = "email", target = "userEmail")
-    @Mapping(source = "password", target = "userPassword")
     @Mapping(target = "userAddress.addressStreet", source = "street")
     @Mapping(target = "userAddress.addressCity", source = "city")
     @Mapping(target = "userAddress.addressCityCode", source = "cityCode")

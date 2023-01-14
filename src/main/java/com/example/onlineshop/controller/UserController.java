@@ -7,6 +7,7 @@ import com.example.onlineshop.exception.UserExist;
 import com.example.onlineshop.exception.UserNotExist;
 import com.example.onlineshop.exception.UserTypeNotValid;
 import com.example.onlineshop.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,19 +31,19 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/add")
-    public UserDto createUser(@RequestBody UserCreationDto user) throws UserExist, PasswordNotMatch {
+    public UserDto createUser(@Valid @RequestBody UserCreationDto user) throws UserExist, PasswordNotMatch {
         return userService.addUser(user);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/add-with-address")
-    public UserWithAddressDto createUserWithAddress(@RequestBody UserCreationWithAddressDto user) throws UserExist, PasswordNotMatch {
+    public UserWithAddressDto createUserWithAddress(@Valid @RequestBody UserCreationWithAddressDto user) throws UserExist, PasswordNotMatch {
         return userService.addUserWithAddress(user);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{id}/add-address")
-    public UserWithAddressDto addAddressForUser(@PathVariable ("id") String id, @RequestBody AddressCreationDto addressCreationDto) throws UserNotExist{
+    public UserWithAddressDto addAddressForUser(@PathVariable ("id") String id,@Valid @RequestBody AddressCreationDto addressCreationDto) throws UserNotExist{
         return userService.addAddressForUser(id, addressCreationDto);
     }
 
@@ -60,14 +61,13 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{id}/update")
-    public UserWithAddressDto updateUser(@PathVariable ("id") String id, @RequestBody UserUpdateDto userUpdateDto) throws UserNotExist {
+    public UserWithAddressDto updateUser(@PathVariable ("id") String id, @Valid @RequestBody UserUpdateDto userUpdateDto) throws UserNotExist {
         return userService.updateUser(id, userUpdateDto);
     }
 
-
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PostMapping("/{id}/usertype")
-    public UserDto setUserType(@PathVariable ("id") String id, @RequestBody UserTypeCreationDto userTypeCreationDto) throws UserTypeNotValid, UserNotExist {
+    public UserDto setUserType(@PathVariable ("id") String id, @Valid @RequestBody UserTypeCreationDto userTypeCreationDto) throws UserTypeNotValid, UserNotExist {
         return userService.setUserType(id, userTypeCreationDto);
     }
 

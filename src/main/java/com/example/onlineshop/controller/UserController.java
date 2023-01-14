@@ -71,6 +71,12 @@ public class UserController {
         return userService.setUserType(id, userTypeCreationDto);
     }
 
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PatchMapping("/{id}/passwd")
+    public UserDto changeUserPassword(@PathVariable ("id") String id, @Valid @RequestBody UserPasswordChangeDto userPasswordChangeDto) throws UserNotExist{
+        return userService.changeUserPassword(id, userPasswordChangeDto);
+    }
+
     //FOR TESTING
     //DELETE AFTER
     @GetMapping("/all")

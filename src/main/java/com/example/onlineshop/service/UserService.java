@@ -10,7 +10,9 @@ import com.example.onlineshop.repository.AddressRepository;
 import com.example.onlineshop.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 public class UserService {
@@ -44,9 +46,9 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public UserWithAddressDto addAddressForUser(String id,AddressCreationDto addressCreationDto) throws UserNotExist {
+    public UserWithAddressDto addAddressForUser(String id, AddressCreationDto addressCreationDto) throws UserNotExist {
         var user = userRepository.findById(id);
-        if(user.isEmpty()){
+        if (user.isEmpty()) {
             throw new UserNotExist();
         }
         var address = addressRepository.save(userMapper.addressCreationWithDtoToAddress(addressCreationDto));
@@ -87,8 +89,16 @@ public class UserService {
 
     public UserDto setUserType(String id, UserTypeCreationDto userTypeCreationDto) throws UserNotExist, UserTypeNotValid {
         var userForUpdate = userRepository.findById(id).orElseThrow(UserNotExist::new);
-        var userType =  userTypeCreationDto.getType().toUpperCase();
-        // check if value of type is in enums
+        var userType = userTypeCreationDto.getType().toUpperCase();
+        AtomicBoolean isValid = new AtomicBoolean(false);
+        for (var type : UserType.values()) {
+            if (type.toString().equals(userTypeCreationDto.getType())) {
+                isValid.set(true);
+            }
+        }
+        if(!isValid.get()){
+            throw new UserTypeNotValid();
+        }
         userForUpdate.setUserType(UserType.valueOf(userType));
         userRepository.save(userForUpdate);
         return userMapper.userToUserDto(userForUpdate);
@@ -100,5 +110,14 @@ public class UserService {
         user.setUserType(userDb.getUserType());
         user.setUserId(userDb.getUserId());
         return userMapper.userToUserWithAddressDto(user);
+    }
+
+    public UserDto changeUserPassword(String id, UserPasswordChangeDto userPasswordChangeDto) throws UserNotExist {
+        var userDb = userRepository.findById(id).orElseThrow(UserNotExist::new);
+        if (userPasswordChangeDto.getPassword().equals(userPasswordChangeDto.getPasswordCheck())) {
+            userDb.setUserPassword(userPasswordChangeDto.getPassword());
+            userRepository.save(userDb);
+        }
+        return userMapper.userToUserDto(userDb);
     }
 }

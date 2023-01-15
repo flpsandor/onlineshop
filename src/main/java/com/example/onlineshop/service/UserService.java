@@ -10,7 +10,6 @@ import com.example.onlineshop.repository.AddressRepository;
 import com.example.onlineshop.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -69,16 +68,9 @@ public class UserService {
             throw new PasswordNotMatch();
         }
         var userForSave = userMapper.userCreationWithAddressDtoToUser(user);
-        var address = new Address();
-        address.setAddressStreet(user.getStreet());
-        address.setAddressCity(user.getCity());
-        address.setAddressCityCode(user.getCityCode());
-        address.setAddressState(user.getState());
-        addressRepository.save(address);
-        userForSave.setUserAddress(address);
+        userForSave.setUserAddress(addressRepository.save(new Address(user.getStreet(), user.getCity(), user.getCityCode(), user.getState())));
         userForSave.setUserType(UserType.USER);
-        userRepository.save(userForSave);
-        return userMapper.userToUserWithAddressDto(userForSave);
+        return userMapper.userToUserWithAddressDto(userRepository.save(userForSave));
     }
 
     public void deleteUser(String id) throws UserNotExist {
@@ -116,8 +108,7 @@ public class UserService {
         var userDb = userRepository.findById(id).orElseThrow(UserNotExist::new);
         if (userPasswordChangeDto.getPassword().equals(userPasswordChangeDto.getPasswordCheck())) {
             userDb.setUserPassword(userPasswordChangeDto.getPassword());
-            userRepository.save(userDb);
         }
-        return userMapper.userToUserDto(userDb);
+        return userMapper.userToUserDto(userRepository.save(userDb));
     }
 }

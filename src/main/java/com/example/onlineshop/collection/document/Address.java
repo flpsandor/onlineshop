@@ -20,4 +20,11 @@ public class Address{
     private String addressCity;
     private String addressCityCode;
     private String addressState;
+
+    public Address(String street, String city, String cityCode, String state) {
+        addressStreet=street;
+        addressCity=city;
+        addressCityCode=cityCode;
+        addressStreet=state;
+    }
 }

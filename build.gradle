@@ -28,6 +28,7 @@ dependencies {
 	implementation 'org.projectlombok:lombok:1.18.24'
 	implementation group: 'org.projectlombok', name: 'lombok-mapstruct-binding', version: '0.2.0'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.0.1'
+	implementation group: 'org.springframework.security', name: 'spring-security-core', version: '6.0.1'
 	annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
 	annotationProcessor "org.mapstruct:mapstruct-processor:1.5.3.Final"
 	compileOnly 'org.projectlombok:lombok'

@@ -35,8 +35,7 @@ public class ProductService {
     }
 
     public List<ProductDto> productList() {
-        var products = productRepository.findAll();
-        return products.stream().map(productMapper::productToProductDto).toList();
+        return productRepository.findAll().stream().map(productMapper::productToProductDto).toList();
     }
 
     public ProductDto update(String productId, Product product) throws ProductNotExist {
@@ -54,8 +53,7 @@ public class ProductService {
     }
 
     public void deleteProductById(String id) throws ProductNotExist {
-        var product = productRepository.findById(id).orElseThrow(ProductNotExist::new);
-        productRepository.delete(product);
+        productRepository.delete(productRepository.findById(id).orElseThrow(ProductNotExist::new));
     }
 
     public ProductDto findProductByName(String name) throws ProductNotExist {
@@ -72,7 +70,6 @@ public class ProductService {
     }
 
     public void deleteCategory(String id) throws CategoryNotExist {
-        var category = categoryRepository.findById(id).orElseThrow(CategoryNotExist::new);
-        categoryRepository.delete(category);
+        categoryRepository.delete(categoryRepository.findById(id).orElseThrow(CategoryNotExist::new));
     }
 }

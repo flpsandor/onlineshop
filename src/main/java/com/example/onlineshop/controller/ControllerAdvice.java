@@ -63,5 +63,10 @@ public class ControllerAdvice {
         return exception.getMessage();
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NullPointerException.class)
+    public String handleNullPointerException(NullPointerException exception){
+        return exception.getMessage();
+    }
 
 }

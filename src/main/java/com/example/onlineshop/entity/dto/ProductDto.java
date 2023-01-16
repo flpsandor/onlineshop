@@ -1,6 +1,6 @@
-package com.example.onlineshop.collection.dto;
+package com.example.onlineshop.entity.dto;
 
-import com.example.onlineshop.collection.document.Category;
+import com.example.onlineshop.entity.document.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

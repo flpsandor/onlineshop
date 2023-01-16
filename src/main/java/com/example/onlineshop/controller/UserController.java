@@ -1,7 +1,7 @@
 package com.example.onlineshop.controller;
 
-import com.example.onlineshop.collection.document.User;
-import com.example.onlineshop.collection.dto.*;
+import com.example.onlineshop.entity.document.User;
+import com.example.onlineshop.entity.dto.*;
 import com.example.onlineshop.exception.PasswordNotMatch;
 import com.example.onlineshop.exception.UserExist;
 import com.example.onlineshop.exception.UserNotExist;

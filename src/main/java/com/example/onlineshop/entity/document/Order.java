@@ -1,7 +1,7 @@
-package com.example.onlineshop.collection.document;
+package com.example.onlineshop.entity.document;
 
 
-import com.example.onlineshop.collection.enum_s.OrderStatus;
+import com.example.onlineshop.entity.enum_s.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

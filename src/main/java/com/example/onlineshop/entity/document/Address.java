@@ -1,4 +1,4 @@
-package com.example.onlineshop.collection.document;
+package com.example.onlineshop.entity.document;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

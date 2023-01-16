@@ -1,4 +1,4 @@
-package com.example.onlineshop.collection.dto;
+package com.example.onlineshop.entity.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

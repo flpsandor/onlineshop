@@ -1,9 +1,9 @@
 package com.example.onlineshop.service;
 
-import com.example.onlineshop.collection.document.Address;
-import com.example.onlineshop.collection.document.User;
-import com.example.onlineshop.collection.dto.*;
-import com.example.onlineshop.collection.enum_s.UserType;
+import com.example.onlineshop.entity.document.Address;
+import com.example.onlineshop.entity.document.User;
+import com.example.onlineshop.entity.dto.*;
+import com.example.onlineshop.entity.enum_s.UserType;
 import com.example.onlineshop.exception.*;
 import com.example.onlineshop.mapper.UserMapper;
 import com.example.onlineshop.repository.AddressRepository;

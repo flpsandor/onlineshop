@@ -1,7 +1,7 @@
 package com.example.onlineshop.mapper;
 
-import com.example.onlineshop.collection.dto.CategoryDto;
-import com.example.onlineshop.collection.document.Category;
+import com.example.onlineshop.entity.dto.CategoryDto;
+import com.example.onlineshop.entity.document.Category;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -1,8 +1,6 @@
-package com.example.onlineshop.collection.dto;
+package com.example.onlineshop.entity.dto;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,13 +10,7 @@ import org.springframework.format.annotation.NumberFormat;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserUpdateDto {
-    @NotNull(message = "first name shouldnt be empty")
-    private String firstName;
-    @NotNull(message = "last name shouldnt be empty")
-    private String lastName;
-    @Email(message = "email is not in valid format")
-    private String email;
+public class AddressCreationDto {
     @NotNull(message = "street name shouldnt be empty")
     private String street;
     @NotNull(message = "city shouldnt be empty")
@@ -28,4 +20,5 @@ public class UserUpdateDto {
     private String cityCode;
     @NotNull(message = "state shouldnt be empty")
     private String state;
+
 }

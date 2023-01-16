@@ -1,8 +1,8 @@
 package com.example.onlineshop.mapper;
 
-import com.example.onlineshop.collection.document.Address;
-import com.example.onlineshop.collection.document.User;
-import com.example.onlineshop.collection.dto.*;
+import com.example.onlineshop.entity.document.Address;
+import com.example.onlineshop.entity.document.User;
+import com.example.onlineshop.entity.dto.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -64,4 +64,9 @@ public interface UserMapper {
     
     @Mapping(source = "password", target = "userPassword")
     User userPasswordChangeDtoToUser(UserPasswordChangeDto userPasswordChangeDto);
+
+    @Mapping(source="userEmail", target = "email")
+    @Mapping(source = "userPassword", target = "password")
+    @Mapping(source = "userType", target="role")
+    CredentialsDto userToCredentialsDto(User user);
 }

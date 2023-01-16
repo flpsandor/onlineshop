@@ -1,9 +1,9 @@
 package com.example.onlineshop.controller;
 
-import com.example.onlineshop.collection.dto.CategoryDto;
-import com.example.onlineshop.collection.dto.ProductCreationDto;
-import com.example.onlineshop.collection.dto.ProductDto;
-import com.example.onlineshop.collection.document.Product;
+import com.example.onlineshop.entity.dto.CategoryDto;
+import com.example.onlineshop.entity.dto.ProductCreationDto;
+import com.example.onlineshop.entity.dto.ProductDto;
+import com.example.onlineshop.entity.document.Product;
 import com.example.onlineshop.exception.CategoryNotExist;
 import com.example.onlineshop.exception.CategoryNotValid;
 import com.example.onlineshop.exception.ProductNotExist;

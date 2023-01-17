@@ -21,8 +21,8 @@ public class Product {
     private String productName;
     private String productDescription;
     private Double productPrice;
+    private Integer productStock;
     @DBRef
     private Category productCategory;
-    @DBRef
-    private Stock productStock;
+
 }

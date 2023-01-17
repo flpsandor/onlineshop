@@ -18,7 +18,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/add-address")
     public ResponseEntity<UserWithAddressDto> addAddressForUser(@RequestHeader("Authentication") String token, @RequestParam ("id") String id,@Valid @RequestBody AddressCreationDto addressCreationDto) throws UserNotExist, TokenNotValid {
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -26,7 +25,6 @@ public class UserController {
         return new ResponseEntity<>(userService.addAddressForUser(token, id, addressCreationDto), responseHeaders, HttpStatus.CREATED);
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/info")
     public ResponseEntity<UserWithAddressDto> allUserInfo(@RequestHeader("Authentication") String token, @RequestParam("id") String id) throws UserNotExist, TokenNotValid {
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -34,7 +32,6 @@ public class UserController {
         return new ResponseEntity<>(userService.allUserInfo(token, id), responseHeaders, HttpStatus.OK);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/delete")
     public ResponseEntity<Void> deleteUser(@RequestHeader("Authentication") String token, @RequestParam ("id") String id) throws UserNotExist, TokenNotValid {
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -42,7 +39,6 @@ public class UserController {
         return new ResponseEntity<>(userService.deleteUser(token, id), responseHeaders, HttpStatus.NO_CONTENT);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PatchMapping("/update")
     public ResponseEntity<UserWithAddressDto> updateUser(@RequestHeader("Authentication") String token, @RequestParam ("id") String id, @Valid @RequestBody UserUpdateDto userUpdateDto) throws UserNotExist {
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -50,7 +46,6 @@ public class UserController {
         return new ResponseEntity<>(userService.updateUser(token, id, userUpdateDto), responseHeaders, HttpStatus.CREATED);
     }
 
-    @ResponseStatus(HttpStatus.ACCEPTED)
     @PatchMapping("/passwd")
     public ResponseEntity<UserDto> changeUserPassword(@RequestHeader("Authentication") String token, @RequestParam ("id") String id, @Valid @RequestBody UserPasswordChangeDto userPasswordChangeDto) throws UserNotExist, TokenNotValid {
         HttpHeaders responseHeaders = new HttpHeaders();

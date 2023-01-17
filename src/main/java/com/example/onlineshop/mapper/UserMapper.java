@@ -11,12 +11,14 @@ import org.mapstruct.factory.Mappers;
 public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
+    @Mapping(source="userId", target = "id")
     @Mapping(source = "userFirstName", target = "firstName")
     @Mapping(source = "userLastName", target = "lastName")
     @Mapping(source = "userEmail", target = "email")
     @Mapping(target = "type", source = "userType")
     UserDto userToUserDto(User user);
 
+    @Mapping(source="userId", target = "id")
     @Mapping(source = "userFirstName", target = "firstName")
     @Mapping(source = "userLastName", target = "lastName")
     @Mapping(source = "userEmail", target = "email")
@@ -55,8 +57,4 @@ public interface UserMapper {
     @Mapping(source = "password", target = "userPassword")
     User userPasswordChangeDtoToUser(UserPasswordChangeDto userPasswordChangeDto);
 
-    @Mapping(source="userEmail", target = "email")
-    @Mapping(source = "userPassword", target = "password")
-    @Mapping(source = "userType", target="role")
-    CredentialsDto userToCredentialsDto(User user);
 }

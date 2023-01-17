@@ -1,6 +1,7 @@
 package com.example.onlineshop.controller;
 
 import com.example.onlineshop.exception.*;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.security.SignatureException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,6 +78,12 @@ public class ControllerAdvice {
         return exception.getMessage();
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ExceptionHandler(NoCategories.class)
+    public String handleNoCategoriesException(NoCategories exception){
+        return exception.getMessage();
+    }
+
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(UserNotAuthorized.class)
     public String handleUserNotAuthorized (UserNotAuthorized exception){
@@ -88,4 +96,15 @@ public class ControllerAdvice {
         return exception.getMessage();
     }
 
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(SignatureException.class)
+    public String handleSignatureException(SignatureException exception){
+        return exception.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(ExpiredJwtException.class)
+    public String handleExpiredJwtException(ExpiredJwtException exception){
+        return exception.getMessage();
+    }
 }

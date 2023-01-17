@@ -1,7 +1,9 @@
 package com.example.onlineshop.controller;
 
+import com.example.onlineshop.entity.dto.CategoryDto;
 import com.example.onlineshop.entity.dto.ProductDto;
 import com.example.onlineshop.exception.CategoryNotExist;
+import com.example.onlineshop.exception.NoCategories;
 import com.example.onlineshop.exception.NoProducts;
 import com.example.onlineshop.exception.ProductNotExist;
 import com.example.onlineshop.service.ProductService;
@@ -41,9 +43,16 @@ public class ProductController {
     }
 
     @GetMapping("/all/category")
-    public ResponseEntity<List<ProductDto>> getAllProductInCategory(@RequestParam("id") String id) throws CategoryNotExist {
+    public ResponseEntity<List<ProductDto>> getAllProductInCategory(@RequestParam("id") String id) throws CategoryNotExist, NoProducts {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("products-information-from-category", "products-information-from-category");
         return new ResponseEntity<>(productService.getAllProductInCategory(id), responseHeaders, HttpStatus.OK);
+    }
+
+    @GetMapping("/category/all")
+    public ResponseEntity<List<CategoryDto>> getAllCategories() throws NoCategories {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("categories", "categories");
+        return new ResponseEntity<>(productService.getAllCategory(), responseHeaders, HttpStatus.OK);
     }
 }

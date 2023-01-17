@@ -21,5 +21,7 @@ public class ProductCreationDto {
     private Double price;
     @NotNull(message = "category is required")
     private String category;
+    @NotNull(message = "stock is required")
+    private Integer stock;
 }
 

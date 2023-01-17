@@ -1,11 +1,12 @@
 package com.example.onlineshop.service;
 
-import com.example.onlineshop.entity.dto.UserCreationDto;
 import com.example.onlineshop.entity.dto.UserDto;
 import com.example.onlineshop.entity.dto.UserTypeCreationDto;
 import com.example.onlineshop.entity.enum_s.UserType;
 import com.example.onlineshop.exception.TokenNotValid;
+import com.example.onlineshop.exception.UserNotAuthorized;
 import com.example.onlineshop.exception.UserNotExist;
+import com.example.onlineshop.mapper.UserMapper;
 import com.example.onlineshop.repository.AddressRepository;
 import com.example.onlineshop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,26 +18,39 @@ public class AdminService {
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
     private final JwtService jwtService;
+    UserMapper userMapper = UserMapper.INSTANCE;
+
 
     private Boolean tokenValidation(String token) throws UserNotExist, TokenNotValid {
-        var Claims = jwtService.extractAllClaims(token.substring(7));
+        token = token.substring(7);
+        var Claims = jwtService.extractAllClaims(token);
         var user = userRepository.findUserByUserEmail(Claims.getSubject()).orElseThrow(UserNotExist::new);
-        if (jwtService.isTokenValid(token, user)) {
+        var role = user.getUserType();
+        if (!jwtService.isTokenValid(token, user)) {
             throw new TokenNotValid();
         }
-        var role = user.getUserType();
         return role.equals(UserType.ADMIN);
     }
 
-    public UserDto setUserType(String token, String id, UserTypeCreationDto userTypeCreationDto) {
-        return null;
+    public UserDto setUserType(String token, String id, UserTypeCreationDto userTypeCreationDto) throws UserNotAuthorized, TokenNotValid, UserNotExist {
+        if (!tokenValidation(token)) {
+            throw new UserNotAuthorized();
+        }
+        var user = userRepository.findById(id).orElseThrow(UserNotExist::new);
+        var userType = userMapper.userTypeDtoToUser(userTypeCreationDto);
+        user.setUserType(userType.getUserType());
+        return userMapper.userToUserDto(user);
     }
 
-    public Void deleteUser(String token, String id) {
-        return null;
-    }
-
-    public UserDto addUser(String token, UserCreationDto user) {
-        return null;
+    public Boolean deleteUser(String token, String id) throws TokenNotValid, UserNotExist, UserNotAuthorized {
+        if (!tokenValidation(token)) {
+            throw new UserNotAuthorized();
+        }
+        var user = userRepository.findById(id).orElseThrow(UserNotExist::new);
+        if(user.getUserAddress()!=null){
+            addressRepository.delete(user.getUserAddress());
+        }
+        userRepository.delete(user);
+        return true;
     }
 }

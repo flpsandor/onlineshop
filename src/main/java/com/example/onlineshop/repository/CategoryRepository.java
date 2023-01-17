@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CategoryRepository extends MongoRepository<Category, String> {
 
-    Void deleteByCategoryId(String id);
 }

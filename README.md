@@ -37,7 +37,7 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
     ```json
     {
       "firstname":"string",
-      "lastname":"string,
+      "lastname":"string",
       "email":"string",
       "password":"string",
       "passwordCheck":"string"
@@ -63,12 +63,12 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
           "id": "string",
           "name": "string",
           "description": "string",
-          "price": Double,
+          "price": "double",
           "category": {
             "categoryId": "string",
             "categoryName": "string"
           },
-          "stock": Integer
+          "stock": "integer"
        }
       ```
       - 404 - No products
@@ -98,12 +98,12 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
           "id": "string",
           "name": "string",
           "description": "string",
-          "price": Double,
+          "price":"double",
           "category": {
             "categoryId": "string",
             "categoryName": "string"
           },
-          "stock": Integer
+          "stock": "integer"
        }
       ```
       - 404 - No product
@@ -120,12 +120,12 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
           "id": "string",
           "name": "string",
           "description": "string",
-          "price": Double,
+          "price": "double",
           "category": {
             "categoryId": "string",
             "categoryName": "string"
           },
-          "stock": Integer
+          "stock": "integer"
        }
       ```
       - 404 - No product
@@ -142,12 +142,12 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
           "id": "string",
           "name": "string",
           "description": "string",
-          "price": Double,
+          "price": "double",
           "category": {
             "categoryId": "string",
             "categoryName": "string"
           },
-          "stock": Integer
+          "stock": "integer"
        }
       ```
       - 404 - No product
@@ -162,9 +162,9 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
         {
           "name": "string",
           "description": "string",
-          "price": Double,
+          "price": "double",
           "category":"string"
-          "stock": Integer
+          "stock": "integer"
        }
     }
     ```
@@ -215,9 +215,9 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
         {
           "name": "string",
           "description": "string",
-          "price": Double,
+          "price": "double",
           "category":"string"
-          "stock": Integer
+          "stock": "integer"
        }
     }
     ```

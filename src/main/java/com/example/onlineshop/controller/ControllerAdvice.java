@@ -70,4 +70,22 @@ public class ControllerAdvice {
         return exception.getMessage();
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ExceptionHandler(NoProducts.class)
+    public String handleNoProductsException(NoProducts exception){
+        return exception.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(UserNotAuthorized.class)
+    public String handleUserNotAuthorized (UserNotAuthorized exception){
+        return exception.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(TokenNotValid.class)
+    public String handleTokenNotValid(TokenNotValid exception){
+        return exception.getMessage();
+    }
+
 }

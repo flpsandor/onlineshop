@@ -23,4 +23,6 @@ public class Product {
     private Double productPrice;
     @DBRef
     private Category productCategory;
+    @DBRef
+    private Stock productStock;
 }

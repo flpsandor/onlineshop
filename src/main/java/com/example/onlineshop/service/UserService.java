@@ -2,6 +2,7 @@ package com.example.onlineshop.service;
 
 import com.example.onlineshop.entity.dto.*;
 import com.example.onlineshop.entity.enum_s.UserType;
+import com.example.onlineshop.exception.TokenNotValid;
 import com.example.onlineshop.exception.UserNotExist;
 import com.example.onlineshop.exception.UserTypeNotValid;
 import com.example.onlineshop.mapper.UserMapper;
@@ -18,35 +19,44 @@ public class UserService {
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
 
+    private final JwtService jwtService;
+
     UserMapper userMapper = UserMapper.INSTANCE;
 
-    public UserDto findUserById(String id) throws UserNotExist {
-        return userMapper.userToUserDto(userRepository.findById(id).orElseThrow(UserNotExist::new));
-    }
-
-    public UserWithAddressDto addAddressForUser(String id, AddressCreationDto addressCreationDto) throws UserNotExist {
-        var user = userRepository.findById(id);
-        if (user.isEmpty()) {
-            throw new UserNotExist();
+    public UserWithAddressDto addAddressForUser(String token, String id, AddressCreationDto addressCreationDto) throws UserNotExist, TokenNotValid {
+        var user = userRepository.findById(id).orElseThrow(UserNotExist::new);
+        if (!jwtService.isTokenValid(token, user)) {
+            throw new TokenNotValid();
         }
         var address = addressRepository.save(userMapper.addressCreationWithDtoToAddress(addressCreationDto));
-        user.get().setUserAddress(address);
-        userRepository.save(user.get());
-        return userMapper.userToUserWithAddressDto(user.get());
+        user.setUserAddress(address);
+        userRepository.save(user);
+        return userMapper.userToUserWithAddressDto(user);
     }
 
-    public UserWithAddressDto allUserInfo(String id) throws UserNotExist {
-        return userMapper.userToUserWithAddressDto(userRepository.findById(id).orElseThrow(UserNotExist::new));
-    }
-
-    public void deleteUser(String id) throws UserNotExist {
+    public UserWithAddressDto allUserInfo(String token, String id) throws UserNotExist, TokenNotValid {
         var user = userRepository.findById(id).orElseThrow(UserNotExist::new);
+        if (!jwtService.isTokenValid(token, user)) {
+            throw new TokenNotValid();
+        }
+        return userMapper.userToUserWithAddressDto(user);
+    }
+
+    public Void deleteUser(String token, String id) throws UserNotExist, TokenNotValid {
+        var user = userRepository.findById(id).orElseThrow(UserNotExist::new);
+        if (!jwtService.isTokenValid(token, user)) {
+            throw new TokenNotValid();
+        }
         addressRepository.delete(user.getUserAddress());
         userRepository.delete(user);
+        return null;
     }
 
-    public UserDto setUserType(String id, UserTypeCreationDto userTypeCreationDto) throws UserNotExist, UserTypeNotValid {
-        var userForUpdate = userRepository.findById(id).orElseThrow(UserNotExist::new);
+    public UserDto setUserType(String token, String id, UserTypeCreationDto userTypeCreationDto) throws UserNotExist, UserTypeNotValid, TokenNotValid {
+        var user = userRepository.findById(id).orElseThrow(UserNotExist::new);
+        if (!jwtService.isTokenValid(token, user)) {
+            throw new TokenNotValid();
+        }
         var userType = userTypeCreationDto.getType().toUpperCase();
         AtomicBoolean isValid = new AtomicBoolean(false);
         for (var type : UserType.values()) {
@@ -57,21 +67,25 @@ public class UserService {
         if (!isValid.get()) {
             throw new UserTypeNotValid();
         }
-        userForUpdate.setUserType(UserType.valueOf(userType));
-        userRepository.save(userForUpdate);
-        return userMapper.userToUserDto(userForUpdate);
+        user.setUserType(UserType.valueOf(userType));
+        userRepository.save(user);
+        return userMapper.userToUserDto(user);
     }
 
-    public UserWithAddressDto updateUser(String id, UserUpdateDto userUpdateDto) throws UserNotExist {
+    public UserWithAddressDto updateUser(String token, String id, UserUpdateDto userUpdateDto) throws UserNotExist {
         var userDb = userRepository.findById(id).orElseThrow(UserNotExist::new);
-        var user = userMapper.userUpdateDtoToUser(userUpdateDto);
-        user.setUserType(userDb.getUserType());
-        user.setUserId(userDb.getUserId());
-        return userMapper.userToUserWithAddressDto(user);
+
+        var userForUpdate = userMapper.userUpdateDtoToUser(userUpdateDto);
+        userForUpdate.setUserType(userDb.getUserType());
+        userForUpdate.setUserId(userDb.getUserId());
+        return userMapper.userToUserWithAddressDto(userForUpdate);
     }
 
-    public UserDto changeUserPassword(String id, UserPasswordChangeDto userPasswordChangeDto) throws UserNotExist {
+    public UserDto changeUserPassword(String token, String id, UserPasswordChangeDto userPasswordChangeDto) throws UserNotExist, TokenNotValid {
         var userDb = userRepository.findById(id).orElseThrow(UserNotExist::new);
+        if (!jwtService.isTokenValid(token, userDb)) {
+            throw new TokenNotValid();
+        }
         if (userPasswordChangeDto.getPassword().equals(userPasswordChangeDto.getPasswordCheck())) {
             userDb.setUserPassword(userPasswordChangeDto.getPassword());
         }

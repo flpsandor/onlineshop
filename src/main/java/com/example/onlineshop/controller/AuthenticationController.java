@@ -1,8 +1,9 @@
 package com.example.onlineshop.controller;
 
-import com.example.onlineshop.entity.dto.AuthenticationRequest;
-import com.example.onlineshop.entity.dto.AuthenticationResponse;
+import com.example.onlineshop.entity.dto.LoginDto;
+import com.example.onlineshop.entity.dto.TokenDto;
 import com.example.onlineshop.entity.dto.UserCreationDto;
+import com.example.onlineshop.exception.UserExist;
 import com.example.onlineshop.exception.UserNotExist;
 import com.example.onlineshop.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +21,13 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody UserCreationDto userCreationDto){
-        return ResponseEntity.ok(authenticationService.reqister(userCreationDto));
+    public ResponseEntity<TokenDto> register(@RequestBody UserCreationDto user) throws UserExist {
+        return ResponseEntity.ok(authenticationService.reqister(user));
     }
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody AuthenticationRequest authenticationRequest) throws UserNotExist {
-        return ResponseEntity.ok(authenticationService.authenticate(authenticationRequest));
+    @PostMapping("/login")
+    public ResponseEntity<TokenDto> login(@RequestBody LoginDto login) throws UserNotExist {
+        return ResponseEntity.ok(authenticationService.login(login));
     }
 
 }

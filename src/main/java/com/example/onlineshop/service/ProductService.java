@@ -11,21 +11,18 @@ import com.example.onlineshop.mapper.CategoryMapper;
 import com.example.onlineshop.mapper.ProductMapper;
 import com.example.onlineshop.repository.CategoryRepository;
 import com.example.onlineshop.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     ProductMapper productMapper = ProductMapper.INSTANCE;
     CategoryMapper categoryMapper = CategoryMapper.INSTANCE;
-
-    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
-        this.productRepository = productRepository;
-        this.categoryRepository = categoryRepository;
-    }
 
     public ProductDto addProduct(ProductCreationDto product) throws CategoryNotValid {
         var productForSave = productMapper.productDtoToProduct(product);

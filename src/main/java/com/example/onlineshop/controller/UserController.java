@@ -1,17 +1,12 @@
 package com.example.onlineshop.controller;
 
-import com.example.onlineshop.entity.document.User;
 import com.example.onlineshop.entity.dto.*;
-import com.example.onlineshop.exception.PasswordNotMatch;
-import com.example.onlineshop.exception.UserExist;
 import com.example.onlineshop.exception.UserNotExist;
 import com.example.onlineshop.exception.UserTypeNotValid;
 import com.example.onlineshop.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -29,17 +24,6 @@ public class UserController {
         return userService.findUserById(id);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/add")
-    public UserDto createUser(@Valid @RequestBody UserCreationDto user) throws UserExist, PasswordNotMatch {
-        return userService.addUser(user);
-    }
-
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/add-with-address")
-    public UserWithAddressDto createUserWithAddress(@Valid @RequestBody UserCreationWithAddressDto user) throws UserExist, PasswordNotMatch {
-        return userService.addUserWithAddress(user);
-    }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{id}/add-address")
@@ -54,7 +38,7 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @GetMapping("/{id}/delete")
+    @DeleteMapping("/{id}/delete")
     public void deleteUser(@PathVariable ("id") String id) throws UserNotExist{
         userService.deleteUser(id);
     }
@@ -75,12 +59,5 @@ public class UserController {
     @PatchMapping("/{id}/passwd")
     public UserDto changeUserPassword(@PathVariable ("id") String id, @Valid @RequestBody UserPasswordChangeDto userPasswordChangeDto) throws UserNotExist{
         return userService.changeUserPassword(id, userPasswordChangeDto);
-    }
-
-    //FOR TESTING
-    //DELETE AFTER
-    @GetMapping("/all")
-    public List<User> listAllUser(){
-        return userService.findAll();
     }
 }

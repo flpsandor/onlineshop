@@ -2,6 +2,7 @@ package com.example.onlineshop.controller;
 
 import com.example.onlineshop.exception.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -39,12 +40,6 @@ public class ControllerAdvice {
         return exception.getMessage();
     }
 
-    @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler(PasswordNotMatch.class)
-    public String handlePasswordNotMatchException(PasswordNotMatch exception){
-        return exception.getMessage();
-    }
-
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ProductNotExist.class)
     public String handleProductNotExistException(ProductNotExist exception){
@@ -66,6 +61,12 @@ public class ControllerAdvice {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NullPointerException.class)
     public String handleNullPointerException(NullPointerException exception){
+        return exception.getMessage();
+    }
+
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(AuthenticationException.class)
+    public String handleAuthentionException(AuthenticationException exception){
         return exception.getMessage();
     }
 

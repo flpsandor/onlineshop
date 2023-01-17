@@ -9,19 +9,17 @@ import com.example.onlineshop.exception.CategoryNotValid;
 import com.example.onlineshop.exception.ProductNotExist;
 import com.example.onlineshop.service.ProductService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/product")
 public class ProductController {
     private final ProductService productService;
-
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
 
     @ResponseStatus(code = HttpStatus.OK)
     @GetMapping("/all")
@@ -30,13 +28,13 @@ public class ProductController {
     }
 
     @ResponseStatus(code = HttpStatus.OK)
-    @GetMapping("/{id}/findById")
+    @GetMapping("/{id}/find-by-id")
     public ProductDto findProductById(@PathVariable ("id") String id) throws ProductNotExist {
         return productService.findProductById(id);
     }
 
     @ResponseStatus(code = HttpStatus.OK)
-    @GetMapping("{name}/findByName")
+    @GetMapping("{name}/find-by-name")
     public ProductDto findProductByName(@PathVariable("name") String name) throws ProductNotExist {
         return productService.findProductByName(name);
     }

@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -26,7 +26,7 @@ public class Order {
     private OrderStatus orderStatus;
     private Double orderPrice;
     @DBRef
-    private List<Product> orderProduct;
+    private Map<Product, Integer> orderProducts;
     @DBRef
     private User orderUser;
 }

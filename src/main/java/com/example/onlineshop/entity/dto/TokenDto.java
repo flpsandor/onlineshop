@@ -6,10 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class AuthenticationRequest {
-    private String email;
-    private String password;
+public class TokenDto {
+    private String token;
 }

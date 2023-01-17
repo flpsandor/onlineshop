@@ -175,7 +175,7 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
      - 401 - Unauthorization
         -Incorrect token
 
-6. Add category
+7. Add category
   - HTTP Method: 'POST'
   - Endpoint URL: '/api/seller/category/add'
   - Request body:
@@ -193,7 +193,7 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
      - 401 - Unauthorization
         -Incorrect token
 
-6. Add product stock
+8. Add product stock
   - HTTP Method: 'PUT'
   - Endpoint URL: '/api/seller/category/add'
   - Request param:
@@ -206,7 +206,7 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
      - 401 - Unauthorization
         -Incorrect token
 
-7. Update product
+9. Update product
   - HTTP Method: 'PATCH'
   - Endpoint URL: '/api/seller/product/update'
     - Request body:
@@ -230,7 +230,7 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
      - 401 - Unauthorization
         -Incorrect token
 
-8. Delete product
+10. Delete product
   - HTTP Method: 'DELETE'
   - Endpoint URL: '/api/seller/product/delete'
   - Request params:
@@ -242,7 +242,7 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
     - 401 - Unauthorized 
       - Incorrect token
 
-9. Delete category
+11. Delete category
   - HTTP Method: 'DELETE'
   - Endpoint URL: '/api/seller/category/delete'
   - Request params:

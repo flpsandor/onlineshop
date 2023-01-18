@@ -81,7 +81,7 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
       ```json
       {
           "id": "string",
-          "name": "string",
+          "name": "string"
        }
       ```
       - 404 - No categories
@@ -159,13 +159,12 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
   - Request body:
     ```json
     {
-        {
-          "name": "string",
-          "description": "string",
-          "price": "double",
-          "category":"string"
-          "stock": "integer"
-       }
+       "name": "string",
+       "description": "string",
+       "price": "double",
+       "category":"string",
+       "stock": "integer"
+       
     }
     ```
   - Request headers:
@@ -181,9 +180,7 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
   - Request body:
     ```json
     {
-        {
-          "name": "string",
-       }
+       "name": "string"
     }
     ```
   - Request headers:
@@ -211,15 +208,13 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
   - Endpoint URL: '/api/seller/product/update'
     - Request body:
     ```json
-    {
-        {
-          "name": "string",
-          "description": "string",
-          "price": "double",
-          "category":"string"
-          "stock": "integer"
+      {
+         "name": "string",
+         "description": "string",
+         "price": "double",
+         "category":"string",
+         "stock": "integer"
        }
-    }
     ```
   - Request param:
     - id - productId
@@ -253,3 +248,28 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
     - 204 - No content
     - 401 - Unauthorized 
       - Incorrect token
+
+12. Delete user
+- HTTP Method: 'DELETE'
+- Endpoint URL: '/api/admin/user/delete'
+- Request params:
+    - id - userId
+- Request headers:
+    - 'Authorization' - token (admin token)
+- Responses:
+    - 204 - No content
+    - 401 - Unauthorized
+        - Incorrect token
+
+12. Set user type
+- HTTP Method: 'POST'
+- Endpoint URL: '/api/admin/user/type'
+- Request params:
+    - id - userId
+    - type - UserType (enum)
+- Request headers:
+    - 'Authorization' - token (admin token)
+- Responses:
+    - 201 - Created
+    - 401 - Unauthorized
+        - Incorrect token

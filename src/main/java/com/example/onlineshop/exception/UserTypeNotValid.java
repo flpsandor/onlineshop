@@ -1,7 +1,9 @@
 package com.example.onlineshop.exception;
 
-public class UserTypeNotValid extends Throwable {
-    public UserTypeNotValid(){
-        super("User type not valid", new Throwable());
+public class UserTypeNotValid extends RuntimeException {
+
+    public UserTypeNotValid(String message){
+        super(message);
     }
+
 }

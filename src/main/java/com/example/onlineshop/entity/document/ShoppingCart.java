@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 
 import java.util.Map;
 
@@ -12,7 +13,7 @@ import java.util.Map;
 @AllArgsConstructor
 @Builder
 public class ShoppingCart {
-    private String shoppingCartEmail;
-    private String shoppingCartUserToken;
+    @Id
+    private String shoppingCartId;
     private Map<Product, Integer> shoppingCartProductList;
 }

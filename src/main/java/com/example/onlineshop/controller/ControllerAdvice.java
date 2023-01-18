@@ -1,8 +1,10 @@
 package com.example.onlineshop.controller;
 
+import com.example.onlineshop.entity.dto.ExceptionDto;
 import com.example.onlineshop.exception.*;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,95 +18,153 @@ import java.util.Map;
 @RestControllerAdvice
 public class ControllerAdvice {
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationArgument(MethodArgumentNotValidException exception){
+    public ResponseEntity<ExceptionDto> handleValidationArgument(MethodArgumentNotValidException exception) {
         Map<String, String> errorMap = new HashMap<>();
         exception.getBindingResult().getFieldErrors().forEach(error -> errorMap.put(error.getField(), error.getDefaultMessage()));
-        return errorMap;
+        return new ResponseEntity<>(ExceptionDto.builder()
+                .title("Field input errors")
+                .details(errorMap.toString())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .errorType(MethodArgumentNotValidException.class.getSimpleName()).build(),
+                HttpStatus.BAD_REQUEST);
     }
 
-    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     @ExceptionHandler(UserTypeNotValid.class)
-    public String handleUserTypeNotValidException(UserTypeNotValid exception){
-        return exception.getMessage();
+    public ResponseEntity<ExceptionDto> handleUserTypeNotValidException(UserTypeNotValid exception) {
+        return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder()
+                .title("User type not valid")
+                .details(exception.getMessage())
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .errorType(UserTypeNotValid.class.getSimpleName()).build(),
+                HttpStatus.UNAUTHORIZED);
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(CategoryNotExist.class)
-    public String handleCategoryNotExistException(CategoryNotExist exception){
-        return exception.getMessage();
+    public ResponseEntity<ExceptionDto> handleCategoryNotExistException(CategoryNotExist exception) {
+        return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder()
+                .title("Category not exist")
+                .details(exception.getMessage())
+                .status(HttpStatus.NOT_FOUND.value())
+                .errorType(CategoryNotExist.class.getSimpleName()).build(),
+                HttpStatus.NOT_FOUND);
     }
 
-    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     @ExceptionHandler(CategoryNotValid.class)
-    public String handleCategoryNotValidException(CategoryNotValid exception){
-        return exception.getMessage();
+    public ResponseEntity<ExceptionDto> handleCategoryNotValidException(CategoryNotValid exception) {
+        return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder()
+                .title("Category not valid")
+                .details(exception.getMessage())
+                .status(HttpStatus.NOT_ACCEPTABLE.value())
+                .errorType(CategoryNotValid.class.getSimpleName()).build(),
+                HttpStatus.NOT_ACCEPTABLE);
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ProductNotExist.class)
-    public String handleProductNotExistException(ProductNotExist exception){
-        return exception.getMessage();
+    public ResponseEntity<ExceptionDto> handleProductNotExistException(ProductNotExist exception) {
+        return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder()
+                .title("Product not exist")
+                .details(exception.getMessage())
+                .status(HttpStatus.NOT_FOUND.value())
+                .errorType(ProductNotExist.class.getSimpleName()).build(),
+                HttpStatus.NOT_FOUND);
     }
 
-    @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(UserExist.class)
-    public String handleUserExistException(UserExist exception){
-        return exception.getMessage();
+    public ResponseEntity<ExceptionDto> handleUserExistException(UserExist exception) {
+        return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder()
+                .title("User already exist")
+                .details(exception.getMessage())
+                .status(HttpStatus.CONFLICT.value())
+                .errorType(UserExist.class.getSimpleName()).build(),
+                HttpStatus.CONFLICT);
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(UserNotExist.class)
-    public String handleUserNotExistException(UserNotExist exception){
-        return exception.getMessage();
+    public ResponseEntity<ExceptionDto> handleUserNotExistException(UserNotExist exception) {
+        return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder()
+                .title("User not exist")
+                .details(exception.getMessage())
+                .status(HttpStatus.NOT_FOUND.value())
+                .errorType(UserNotExist.class.getSimpleName()).build(),
+                HttpStatus.NOT_FOUND);
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NullPointerException.class)
-    public String handleNullPointerException(NullPointerException exception){
-        return exception.getMessage();
+    public ResponseEntity<ExceptionDto> handleNullPointerException(NullPointerException exception) {
+        return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder()
+                .title("Null pointer exception")
+                .details(exception.getMessage())
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .errorType(NullPointerException.class.getSimpleName()).build(),
+                HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AuthenticationException.class)
-    public String handleAuthentionException(AuthenticationException exception){
-        return exception.getMessage();
+    public ResponseEntity<ExceptionDto> handleAuthentionException(AuthenticationException exception) {
+        return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder()
+                .title("Authentication exception")
+                .details(exception.getMessage())
+                .status(HttpStatus.FORBIDDEN.value())
+                .errorType(AuthenticationException.class.getSimpleName()).build(),
+                HttpStatus.FORBIDDEN);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ExceptionHandler(NoProducts.class)
-    public String handleNoProductsException(NoProducts exception){
+    public String handleNoProductsException(NoProducts exception) {
         return exception.getMessage();
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @ExceptionHandler(NoCategories.class)
-    public String handleNoCategoriesException(NoCategories exception){
-        return exception.getMessage();
+    public ResponseEntity<ExceptionDto> handleNoCategoriesException(NoCategories exception) {
+        return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder()
+                .title("Category dont have any item")
+                .details(exception.getMessage())
+                .status(HttpStatus.NO_CONTENT.value())
+                .errorType(NoCategories.class.getSimpleName()).build(),
+                HttpStatus.NO_CONTENT);
     }
 
-    @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(UserNotAuthorized.class)
-    public String handleUserNotAuthorized (UserNotAuthorized exception){
-        return exception.getMessage();
+    public ResponseEntity<ExceptionDto> handleUserNotAuthorized(UserNotAuthorized exception) {
+        return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder()
+                .title("User not authorized")
+                .details(exception.getMessage())
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .errorType(UserNotAuthorized.class.getSimpleName()).build(),
+                HttpStatus.UNAUTHORIZED);
     }
 
-    @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(TokenNotValid.class)
-    public String handleTokenNotValid(TokenNotValid exception){
-        return exception.getMessage();
+    public ResponseEntity<ExceptionDto> handleTokenNotValid(TokenNotValid exception) {
+        return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder()
+                .title("Token not valid")
+                .details(exception.getMessage())
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .errorType(TokenNotValid.class.getSimpleName()).build(),
+                HttpStatus.UNAUTHORIZED);
+    }
+
+
+    @ExceptionHandler(SignatureException.class)
+    public ResponseEntity<ExceptionDto> handleSignatureException(SignatureException exception) {
+        return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder()
+                .title("Signature exception")
+                .details(exception.getMessage())
+                .status(HttpStatus.FORBIDDEN.value())
+                .errorType(SignatureException.class.getSimpleName()).build(),
+                HttpStatus.FORBIDDEN);
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler(SignatureException.class)
-    public String handleSignatureException(SignatureException exception){
-        return exception.getMessage();
-    }
-
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(ExpiredJwtException.class)
-    public String handleExpiredJwtException(ExpiredJwtException exception){
-        return exception.getMessage();
+    public ResponseEntity<ExceptionDto> handleExpiredJwtException(ExpiredJwtException exception) {
+        return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder()
+                .title("Expired jwt exception")
+                .details(exception.getMessage())
+                .status(HttpStatus.FORBIDDEN.value())
+                .errorType(ExpiredJwtException.class.getSimpleName()).build(),
+                HttpStatus.FORBIDDEN);
     }
 }

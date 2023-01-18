@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 
 @Data
@@ -15,5 +17,7 @@ import java.util.Map;
 public class ShoppingCart {
     @Id
     private String shoppingCartId;
-    private Map<Product, Integer> shoppingCartProductList;
+    private String shoppingCartUserInformation;
+    private Map<Product, Integer> shoppingCartProducts = new HashMap<>();
+    private LocalDateTime shoppingCartDate;
 }

@@ -1,5 +1,6 @@
 package com.example.onlineshop.controller;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.example.onlineshop.entity.dto.ExceptionDto;
 import com.example.onlineshop.exception.*;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -157,7 +158,6 @@ public class ControllerAdvice {
                 HttpStatus.FORBIDDEN);
     }
 
-    @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(ExpiredJwtException.class)
     public ResponseEntity<ExceptionDto> handleExpiredJwtException(ExpiredJwtException exception) {
         return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder()
@@ -166,5 +166,24 @@ public class ControllerAdvice {
                 .status(HttpStatus.FORBIDDEN.value())
                 .errorType(ExpiredJwtException.class.getSimpleName()).build(),
                 HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(ShoppingCartNotExist.class)
+    public ResponseEntity<ExceptionDto> handleShoppingCartNotExistException(ShoppingCartNotExist exception){
+        return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder()
+                .title("Shopping cart not exist")
+                .details(exception.getMessage())
+                .status(HttpStatus.NOT_FOUND.value())
+                .errorType(ShoppingCartNotExist.class.getSimpleName()).build(),
+                HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity<ExceptionDto> handleTokenExpiredException(TokenExpiredException exception){
+        return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder()
+                .title("Token expired")
+                .details(exception.getMessage())
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .errorType(TokenExpiredException.class.getSimpleName()).build(),
+                HttpStatus.UNAUTHORIZED);
     }
 }

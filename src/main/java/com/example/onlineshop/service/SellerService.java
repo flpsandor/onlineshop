@@ -129,6 +129,4 @@ public class SellerService {
         orderRepository.delete(order);
         return true;
     }
-
-
 }

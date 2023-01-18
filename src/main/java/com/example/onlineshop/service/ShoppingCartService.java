@@ -29,7 +29,7 @@ public class ShoppingCartService {
         }
         var products = cart.getShoppingCartProducts();
         for (var product : cart.getShoppingCartProducts().entrySet()) {
-            if (product.getKey().equals(shoppingCartCreationDto.getProduct())) {
+            if (product.getKey().getProductId().equals(shoppingCartCreationDto.getProduct().getProductId())) {
                 products.replace(product.getKey(), shoppingCartCreationDto.getCount());
             }
             products.put(shoppingCartCreationDto.getProduct(), shoppingCartCreationDto.getCount());

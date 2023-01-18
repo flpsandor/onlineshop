@@ -26,7 +26,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     UserMapper userMapper = UserMapper.INSTANCE;
 
-    public TokenDto reqister(UserCreationDto user) throws UserExist, PasswordNotMatch {
+    public TokenDto register(UserCreationDto user) throws UserExist, PasswordNotMatch {
         var userForSave = userMapper.userCreationDtoToUser(user);
         if (userRepository.findUserByUserEmail(userForSave.getUserEmail()).isPresent()) {
             throw new UserExist();

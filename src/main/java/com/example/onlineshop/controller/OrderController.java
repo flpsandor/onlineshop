@@ -20,14 +20,4 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/order")
 public class OrderController {
-
-    private final OrderService orderService;
-    private final SellerService sellerService;
-
-    @GetMapping("/info")
-    public ResponseEntity<OrderDto> getOrderInfo(@RequestHeader("Authorization") String token, @NonNull @RequestParam String id) throws UserNotAuthorized, OrderNotValid, TokenNotValid, UserNotExist {
-        HttpHeaders responseHeader = new HttpHeaders();
-        responseHeader.add("order-info", "order-info");
-        return new ResponseEntity<>(orderService.getOrderInfo(token, id), responseHeader, HttpStatus.OK);
-    }
 }

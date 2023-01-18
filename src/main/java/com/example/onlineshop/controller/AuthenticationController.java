@@ -23,7 +23,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<TokenDto> register(@RequestBody UserCreationDto user) throws UserExist, PasswordNotMatch {
-        return ResponseEntity.ok(authenticationService.reqister(user));
+        return ResponseEntity.ok(authenticationService.register(user));
     }
 
     @PostMapping("/login")

@@ -105,6 +105,13 @@ public class SellerService {
         return orderRepository.findAll().stream().map(orderMapper::orderToOrderDto).toList();
     }
 
+    public OrderDto getOrderInfo(String token, String id) throws TokenNotValid, UserNotExist, UserNotAuthorized, OrderNotValid {
+        if (!tokenValidation(token)) {
+            throw new UserNotAuthorized();
+        }
+        return orderMapper.orderToOrderDto(orderRepository.findById(id).orElseThrow(OrderNotValid::new));
+    }
+
     public OrderDto changeStatus(String token, String id, String status) throws UserNotAuthorized, TokenNotValid, UserNotExist, OrderNotValid {
         if (!tokenValidation(token)) {
             throw new UserNotAuthorized();
@@ -123,10 +130,5 @@ public class SellerService {
         return true;
     }
 
-    public OrderDto getOrderInfo(String token, String id) throws TokenNotValid, UserNotExist, UserNotAuthorized, OrderNotValid {
-        if (!tokenValidation(token)) {
-            throw new UserNotAuthorized();
-        }
-        return orderMapper.orderToOrderDto(orderRepository.findById(id).orElseThrow(OrderNotValid::new));
-    }
+
 }

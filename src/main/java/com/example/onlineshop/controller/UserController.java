@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<UserWithAddressDto> updateUser(@RequestHeader("Authentication") String token, @RequestParam ("id") String id, @Valid @RequestBody UserUpdateDto userUpdateDto) throws UserNotExist {
+    public ResponseEntity<UserWithAddressDto> updateUser(@RequestHeader("Authentication") String token, @RequestParam ("id") String id, @Valid @RequestBody UserUpdateDto userUpdateDto) throws UserNotExist, TokenNotValid {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("update-user", "update-user");
         return new ResponseEntity<>(userService.updateUser(token, id, userUpdateDto), responseHeaders, HttpStatus.CREATED);
@@ -52,6 +52,4 @@ public class UserController {
         responseHeaders.add("password-change", "password-change");
         return new ResponseEntity<>(userService.changeUserPassword(token, id, userPasswordChangeDto), responseHeaders, HttpStatus.ACCEPTED);
     }
-
-
 }

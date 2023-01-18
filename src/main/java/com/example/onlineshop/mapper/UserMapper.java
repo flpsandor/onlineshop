@@ -50,9 +50,6 @@ public interface UserMapper {
     @Mapping(source = "cityCode", target = "addressCityCode")
     @Mapping(source = "state", target = "addressState")
     Address addressCreationWithDtoToAddress(AddressCreationDto addressCreationDto);
-
-    @Mapping(source = "type", target = "userType")
-    User userTypeDtoToUser(UserTypeCreationDto userTypeCreationDto);
     
     @Mapping(source = "password", target = "userPassword")
     User userPasswordChangeDtoToUser(UserPasswordChangeDto userPasswordChangeDto);

@@ -1,9 +1,6 @@
 package com.example.onlineshop.controller;
 
-import com.example.onlineshop.entity.dto.CategoryCreationDto;
-import com.example.onlineshop.entity.dto.CategoryDto;
-import com.example.onlineshop.entity.dto.ProductCreationDto;
-import com.example.onlineshop.entity.dto.ProductDto;
+import com.example.onlineshop.entity.dto.*;
 import com.example.onlineshop.exception.*;
 import com.example.onlineshop.service.SellerService;
 import jakarta.validation.Valid;
@@ -13,6 +10,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -60,5 +59,33 @@ public class SellerController {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("delete-product-category", "delete-product-category");
         return new ResponseEntity<>(sellerService.deleteCategory(token, id), responseHeaders, HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/order/status")
+    public ResponseEntity<OrderDto> changeStatus(@RequestHeader("Authorization") String token, @RequestParam ("id") String id, @RequestParam("status") String status) throws UserNotAuthorized, OrderNotValid, TokenNotValid, UserNotExist {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("change-status", "change-status");
+        return new ResponseEntity<>(sellerService.changeStatus(token, id, status), responseHeaders, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/order/delete")
+    public ResponseEntity<Boolean> deleteOrder(@RequestHeader("Authorization") String token, @RequestParam("id") String id) throws UserNotAuthorized, OrderNotValid, TokenNotValid, UserNotExist {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("delete-order", "delete-order");
+        return new ResponseEntity<>(sellerService.deleteOrder(token, id), responseHeaders, HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/order/all")
+    public ResponseEntity<List<OrderDto>> getAllOrdersInfo(@RequestHeader("Authorization") String token) throws TokenNotValid, UserNotExist, UserNotAuthorized {
+        HttpHeaders responseHeader = new HttpHeaders();
+        responseHeader.add("orders-info", "orders-info");
+        return new ResponseEntity<>(sellerService.getAllOrdersInfo(token), responseHeader, HttpStatus.OK);
+    }
+
+    @GetMapping("/order/info")
+    public ResponseEntity<OrderDto> getOrderInfo(@RequestHeader("Authorization") String token, @NonNull @RequestParam String id) throws UserNotAuthorized, OrderNotValid, TokenNotValid, UserNotExist {
+        HttpHeaders responseHeader = new HttpHeaders();
+        responseHeader.add("order-info", "order-info");
+        return new ResponseEntity<>(sellerService.getOrderInfo(token, id), responseHeader, HttpStatus.OK);
     }
 }

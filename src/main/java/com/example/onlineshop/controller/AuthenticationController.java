@@ -3,6 +3,7 @@ package com.example.onlineshop.controller;
 import com.example.onlineshop.entity.dto.LoginDto;
 import com.example.onlineshop.entity.dto.TokenDto;
 import com.example.onlineshop.entity.dto.UserCreationDto;
+import com.example.onlineshop.exception.PasswordNotMatch;
 import com.example.onlineshop.exception.UserExist;
 import com.example.onlineshop.exception.UserNotExist;
 import com.example.onlineshop.service.AuthenticationService;
@@ -21,12 +22,12 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<TokenDto> register(@RequestBody UserCreationDto user) throws UserExist {
+    public ResponseEntity<TokenDto> register(@RequestBody UserCreationDto user) throws UserExist, PasswordNotMatch {
         return ResponseEntity.ok(authenticationService.reqister(user));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@RequestBody LoginDto login) throws UserNotExist {
+    public ResponseEntity<TokenDto> login(@RequestBody LoginDto login) throws UserNotExist, PasswordNotMatch {
         return ResponseEntity.ok(authenticationService.login(login));
     }
 

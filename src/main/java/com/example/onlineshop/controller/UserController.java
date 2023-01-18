@@ -52,4 +52,6 @@ public class UserController {
         responseHeaders.add("password-change", "password-change");
         return new ResponseEntity<>(userService.changeUserPassword(token, id, userPasswordChangeDto), responseHeaders, HttpStatus.ACCEPTED);
     }
+
+
 }

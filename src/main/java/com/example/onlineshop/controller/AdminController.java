@@ -1,12 +1,10 @@
 package com.example.onlineshop.controller;
 
 import com.example.onlineshop.entity.dto.UserDto;
-import com.example.onlineshop.entity.dto.UserTypeCreationDto;
 import com.example.onlineshop.exception.TokenNotValid;
 import com.example.onlineshop.exception.UserNotAuthorized;
 import com.example.onlineshop.exception.UserNotExist;
 import com.example.onlineshop.service.AdminService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,10 +18,10 @@ public class AdminController {
     private final AdminService adminService;
 
     @PostMapping("/user/type")
-    public ResponseEntity<UserDto> setUserType(@RequestHeader("Authorization") String token, @RequestParam ("id") String id, @Valid @RequestBody UserTypeCreationDto userTypeCreationDto) throws UserNotExist, TokenNotValid, UserNotAuthorized {
+    public ResponseEntity<UserDto> setUserType(@RequestHeader("Authorization") String token, @RequestParam ("id") String id, @RequestParam("type") String type) throws UserNotExist, TokenNotValid, UserNotAuthorized {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("user-type", "user-type");
-        return new ResponseEntity<>(adminService.setUserType(token, id, userTypeCreationDto), responseHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(adminService.setUserType(token, id, type), responseHeaders, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/user/delete")

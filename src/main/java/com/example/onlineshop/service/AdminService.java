@@ -1,7 +1,6 @@
 package com.example.onlineshop.service;
 
 import com.example.onlineshop.entity.dto.UserDto;
-import com.example.onlineshop.entity.dto.UserTypeCreationDto;
 import com.example.onlineshop.entity.enum_s.UserType;
 import com.example.onlineshop.exception.TokenNotValid;
 import com.example.onlineshop.exception.UserNotAuthorized;
@@ -32,13 +31,12 @@ public class AdminService {
         return role.equals(UserType.ADMIN);
     }
 
-    public UserDto setUserType(String token, String id, UserTypeCreationDto userTypeCreationDto) throws UserNotAuthorized, TokenNotValid, UserNotExist {
+    public UserDto setUserType(String token, String id, String type) throws UserNotAuthorized, TokenNotValid, UserNotExist {
         if (!tokenValidation(token)) {
             throw new UserNotAuthorized();
         }
         var user = userRepository.findById(id).orElseThrow(UserNotExist::new);
-        var userType = userMapper.userTypeDtoToUser(userTypeCreationDto);
-        user.setUserType(userType.getUserType());
+        user.setUserType(UserType.valueOf(type.toUpperCase()));
         return userMapper.userToUserDto(user);
     }
 

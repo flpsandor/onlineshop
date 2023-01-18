@@ -1,18 +1,20 @@
 package com.example.onlineshop.service;
 
-import com.example.onlineshop.entity.dto.CategoryCreationDto;
-import com.example.onlineshop.entity.dto.CategoryDto;
-import com.example.onlineshop.entity.dto.ProductCreationDto;
-import com.example.onlineshop.entity.dto.ProductDto;
+import com.example.onlineshop.entity.dto.*;
+import com.example.onlineshop.entity.enum_s.OrderStatus;
 import com.example.onlineshop.entity.enum_s.UserType;
 import com.example.onlineshop.exception.*;
 import com.example.onlineshop.mapper.CategoryMapper;
+import com.example.onlineshop.mapper.OrderMapper;
 import com.example.onlineshop.mapper.ProductMapper;
 import com.example.onlineshop.repository.CategoryRepository;
+import com.example.onlineshop.repository.OrderRepository;
 import com.example.onlineshop.repository.ProductRepository;
 import com.example.onlineshop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,11 +25,15 @@ public class SellerService {
     private final CategoryRepository categoryRepository;
     private final JwtService jwtService;
 
+    private final OrderRepository orderRepository;
+
+    OrderMapper orderMapper = OrderMapper.INSTANCE;
     ProductMapper productMapper = ProductMapper.INSTANCE;
     CategoryMapper categoryMapper = CategoryMapper.INSTANCE;
 
     private Boolean tokenValidation(String token) throws UserNotExist, TokenNotValid {
-        var Claims = jwtService.extractAllClaims(token.substring(7));
+        token = token.substring(7);
+        var Claims = jwtService.extractAllClaims(token);
         var user = userRepository.findUserByUserEmail(Claims.getSubject()).orElseThrow(UserNotExist::new);
         var role = user.getUserType();
         if (!jwtService.isTokenValid(token, user)) {
@@ -87,8 +93,40 @@ public class SellerService {
             throw new UserNotAuthorized();
         }
         var product = productRepository.findById(id).orElseThrow(ProductNotExist::new);
-        product.setProductStock(product.getProductStock()+num);
+        product.setProductStock(product.getProductStock() + num);
         productRepository.save(product);
         return productMapper.productToProductDto(product);
+    }
+
+    public List<OrderDto> getAllOrdersInfo(String token) throws UserNotExist, TokenNotValid, UserNotAuthorized {
+        if (!tokenValidation(token)) {
+            throw new UserNotAuthorized();
+        }
+        return orderRepository.findAll().stream().map(orderMapper::orderToOrderDto).toList();
+    }
+
+    public OrderDto changeStatus(String token, String id, String status) throws UserNotAuthorized, TokenNotValid, UserNotExist, OrderNotValid {
+        if (!tokenValidation(token)) {
+            throw new UserNotAuthorized();
+        }
+        var order = orderRepository.findById(id).orElseThrow(OrderNotValid::new);
+        order.setOrderStatus(OrderStatus.valueOf(status.toUpperCase()));
+        return orderMapper.orderToOrderDto(order);
+    }
+
+    public Boolean deleteOrder(String token, String id) throws OrderNotValid, UserNotAuthorized, TokenNotValid, UserNotExist {
+        if (!tokenValidation(token)) {
+            throw new UserNotAuthorized();
+        }
+        var order = orderRepository.findById(id).orElseThrow(OrderNotValid::new);
+        orderRepository.delete(order);
+        return true;
+    }
+
+    public OrderDto getOrderInfo(String token, String id) throws TokenNotValid, UserNotExist, UserNotAuthorized, OrderNotValid {
+        if (!tokenValidation(token)) {
+            throw new UserNotAuthorized();
+        }
+        return orderMapper.orderToOrderDto(orderRepository.findById(id).orElseThrow(OrderNotValid::new));
     }
 }

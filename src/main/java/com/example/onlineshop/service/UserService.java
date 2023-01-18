@@ -11,8 +11,6 @@ import com.example.onlineshop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -52,22 +50,21 @@ public class UserService {
         return null;
     }
 
-    public UserDto setUserType(String token, String id, UserTypeCreationDto userTypeCreationDto) throws UserNotExist, UserTypeNotValid, TokenNotValid {
+    public UserDto setUserType(String token, String id, String type) throws UserNotExist, UserTypeNotValid, TokenNotValid {
         var user = userRepository.findById(id).orElseThrow(UserNotExist::new);
         if (!jwtService.isTokenValid(token, user)) {
             throw new TokenNotValid();
         }
-        var userType = userTypeCreationDto.getType().toUpperCase();
-        AtomicBoolean isValid = new AtomicBoolean(false);
-        for (var type : UserType.values()) {
-            if (type.toString().equals(userTypeCreationDto.getType())) {
-                isValid.set(true);
+        boolean isValid = false;
+        for (var t : UserType.values()) {
+            if (t.toString().equalsIgnoreCase(type)) {
+                isValid = true;
             }
         }
-        if (!isValid.get()) {
+        if (!isValid) {
             throw new UserTypeNotValid();
         }
-        user.setUserType(UserType.valueOf(userType));
+        user.setUserType(UserType.valueOf(type.toUpperCase()));
         userRepository.save(user);
         return userMapper.userToUserDto(user);
     }

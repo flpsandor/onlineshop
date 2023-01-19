@@ -379,3 +379,60 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
         - Unauthorized
         - Incorrect token
     - 404 - No user
+
+18. Add product in cart
+- HTTP Method: 'POST'
+- Endpoint URL: '/api/cart/add'
+    - Request body:
+  ```json
+    {
+       "user": "string",
+       "product": "Product",
+       "count" : "Integer"
+     }
+  ```
+- Request param:
+    - id - userId (id is generated on frontend with device information, so no loggin is needed for this)
+- Responses:
+    - 201 - Created
+
+19. Clear cart
+- HTTP Method: 'DELETE'
+- Endpoint URL: '/api/cart/clear'
+- Request param:
+    - id - userId (id is generated on frontend with device information, so no loggin is needed for this)
+- Responses:
+    - 204 - No content
+    - 404 - No cart
+
+20. Create order (shopping cart service find cart by id of user, and send this data to orderservice to create order)
+- HTTP Method: 'POST'
+- Endpoint URL: '/api/cart/add-order'
+- Request headers:
+    - 'Authorization' - token (user token)
+- Request param:
+    - id - userId (id is generated on frontend with device information, so no loggin is needed for this)
+- Request headers:
+    - 'Authorization' - token (user token)
+- Responses:
+    - 204 - Created
+    - 401
+      - Unauthorized
+      - Incorrect token
+    - 404 
+        - No User
+        - No shopping cart
+
+OrderService recive shopping cart object and token values
+
+- Request arguments:
+  ```json
+    {
+       "shoppingCartId": "string",
+       "shoppingCartUserInformation": "string",
+       "shoppingCartProducts": "double",
+       "shoppingCartDate":"string"
+     }
+  ```
+    - 'Authorization' - token (user token)
+

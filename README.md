@@ -90,7 +90,7 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
           "id": "string",
           "name": "string"
        }
-          ```
+       ```
   - Responses:
       - 200 - OK
       - 404 - No categories
@@ -161,8 +161,8 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
        }
       ```
   - Responses:
-   - 200 - Ok
-   - 404 - No product
+    - 200 - Ok
+     - 404 - No product
 
 
 6. Add product
@@ -192,10 +192,10 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
        "stock": "integer"
     }
     ```
-  - Responses:
-     - 201 - Created
-     - 401 - Unauthorization
-        -Incorrect token
+- Responses:
+   - 201 - Created
+   - 401 - Unauthorization
+      -Incorrect token
 
 7. Add category
   - HTTP Method: 'POST'
@@ -239,13 +239,12 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
       "stock": "integer"
    }
    ```
-  - Responses:
-     - 201 - Created
-     - 401 - Unauthorization
-        -Incorrect token
-    - 404
-        - No product
-        - 
+- Responses:
+   - 201 - Created
+   - 401 - Unauthorization
+      -Incorrect token
+  - 404
+      - No product
 9. Update product
   - HTTP Method: 'PATCH'
   - Endpoint URL: '/api/seller/product/update'
@@ -274,12 +273,12 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
        "stock": "integer"
     }
     ```
-  - Responses:
-     - 201 - Created
-     - 401 - Unauthorization
-        -Incorrect token
-     - 404
-       - No product 
+- Responses:
+   - 201 - Created
+   - 401 
+     - Unauthorization
+     - Incorrect token
+   - 404 - No product 
 
 10. Delete product
   - HTTP Method: 'DELETE'
@@ -341,8 +340,9 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
     ```
 - Responses:
     - 201 - Created
-    - 401 - Unauthorized
-        - Incorrect token
+    - 401 
+      - Unauthorized
+      - Incorrect token
     - 404 - No user
 
 13. Add address information to user
@@ -377,8 +377,9 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
   ```
 - Responses:
     - 201 - Created
-    - 401 - Unauthorization
-      -Incorrect token
+    - 401 
+      - Unauthorization 
+      - -Incorrect token
     - 404 - User not exist
 
 14. User information
@@ -404,8 +405,9 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
     - 'Authorization' - token (user)
 - Responses:
     - 200 - OK
-    - 401 - Unauthorization
-      -Incorrect token
+    - 401 
+      - Unauthorization
+      - Incorrect token
     - 404 - User not exist
 
 15. Delete user
@@ -417,7 +419,8 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
     - 'Authorization' - token (user token)
 - Responses:
     - 204 - No content
-    - 401 - Unauthorized
+    - 401 
+       - Unauthorized
         - Incorrect token
     - 404 - No user
 

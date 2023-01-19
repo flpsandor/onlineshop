@@ -273,3 +273,109 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
     - 201 - Created
     - 401 - Unauthorized
         - Incorrect token
+
+13. Add address information to user
+- HTTP Method: 'POST'
+- Endpoint URL: '/api/user/add-address'
+    - Request body:
+  ```json
+    {
+       "street": "string",
+       "city": "string",
+       "cityCode": "double",
+       "state":"string"
+     }
+  ```
+- Request param:
+    - id - userId
+- Request headers:
+    - 'Authorization' - token (user)
+- Responses:
+    - 201 - Created
+    - 401 - Unauthorization
+      -Incorrect token
+    - 404 - User not exist
+
+14. User information
+- HTTP Method: 'GET'
+- Endpoint URL: '/api/user/info'
+    - Response body:
+  ```json
+    {
+       "id": "string",
+       "firstName": "string",
+       "lastName": "string",
+       "email": "double",
+       "type":"string",
+       "street" : "string",
+       "city": "string",
+       "cityCode": "string",
+       "state" : "string"
+     }
+  ```
+- Request param:
+    - id - userId
+- Request headers:
+    - 'Authorization' - token (user)
+- Responses:
+    - 200 - OK
+    - 401 - Unauthorization
+      -Incorrect token
+    - 404 - User not exist
+
+15. Delete user
+- HTTP Method: 'DELETE'
+- Endpoint URL: '/api/user/delete'
+- Request params:
+    - id - userId
+- Request headers:
+    - 'Authorization' - token (user token)
+- Responses:
+    - 204 - No content
+    - 401 - Unauthorized
+        - Incorrect token
+    - 404 - No user
+
+16. Update user information
+- HTTP Method: 'POST'
+- Endpoint URL: '/api/user/update'
+    - Request body:
+  ```json
+    {
+       "firstName": "string",
+       "lastName": "string",
+       "email": "double",
+       "type":"string",
+       "street" : "string",
+       "city": "string",
+       "cityCode": "string",
+       "state" : "string"
+     }
+  ```
+- Request headers:
+  - 'Authorization' - token (user token)
+- Responses:
+    - 201 - Created
+    - 401 
+      - Unauthorized
+      - Incorrect token
+    - 404 - No user
+
+17. Change password information
+- HTTP Method: 'POST'
+- Endpoint URL: '/api/user/update'
+    - Request body:
+  ```json
+    {
+       "password": "string",
+       "passwordCheck": "string"
+     }
+  ```
+- Request headers:
+    - 'Authorization' - token (user token)
+- Responses:
+    - 202 - Accepted
+    - 401
+        - Unauthorized
+        - Incorrect token
+    - 404 - No user

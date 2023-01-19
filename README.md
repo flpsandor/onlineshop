@@ -6,6 +6,7 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
 - User can see all product
 - User can categorise products, by id, name, and category
 - User can access the register endpoint
+- User can add product in shopping cart
 
 ## User
 - User can create orders
@@ -43,6 +44,12 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
       "passwordCheck":"string"
     }
     ```
+  - Response body:
+    ```json
+    {
+      "token": "string"
+    }
+    ```
   - Responses:
     - 201 - Registered
     - 400 - Bad Request
@@ -56,8 +63,7 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
 2. All products
   - HTTP Method: 'GET'
   - Endpoint URL: '/api/product/all'
-    Responses:
-      - 200 - OK
+  - Response body:
       ```json
       {
           "id": "string",
@@ -71,19 +77,22 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
           "stock": "integer"
        }
       ```
-      - 404 - No products
+  - Responses:
+    - 200 - OK
+    - 404 - No products
 
 2. All categories
   - HTTP Method: 'GET'
   - Endpoint URL: '/api/product/category/all'
-    Responses:
-      - 200 - OK
+  - Response body:
       ```json
       {
           "id": "string",
           "name": "string"
        }
-      ```
+          ```
+  - Responses:
+      - 200 - OK
       - 404 - No categories
 
 3. Find product by id
@@ -91,8 +100,7 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
   - Endpoint URL: '/api/product/find-by-id?id'
     Requestparam:
       - id - productid
-    Responses:
-      - 200 - OK
+  - Response body:
       ```json
       {
           "id": "string",
@@ -106,15 +114,16 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
           "stock": "integer"
        }
       ```
-      - 404 - No product
+  - Responses:
+    - 200 - OK
+    - 404 - No product
 
 4. Find product by name
   - HTTP Method: 'GET'
   - Endpoint URL: '/api/product/find-by-name?name'
-    Requestparam:
+  - Requestparam:
       - id - productName
-    Responses:
-      - 200 - OK
+  - Response body:
       ```json
       {
           "id": "string",
@@ -128,15 +137,16 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
           "stock": "integer"
        }
       ```
-      - 404 - No product
+  - Responses:
+    - 200 - OK
+    - 404 - No product
 
 5. Find product by categoryId
   - HTTP Method: 'GET'
   - Endpoint URL: '/api/product/product/all/category?id'
   - Requestparam:
       - id - categoryId
-    Responses:
-      - 200 - OK
+  - Response body:
       ```json
       {
           "id": "string",
@@ -150,7 +160,9 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
           "stock": "integer"
        }
       ```
-      - 404 - No product
+  - Responses:
+   - 200 - Ok
+   - 404 - No product
 
 
 6. Add product
@@ -169,6 +181,17 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
     ```
   - Request headers:
      - 'Authorization' - token (seller)
+- Response body:
+   ```json
+    {
+       "id" : "string",
+       "name": "string",
+       "description": "string",
+       "price": "double",
+       "category":"string",
+       "stock": "integer"
+    }
+    ```
   - Responses:
      - 201 - Created
      - 401 - Unauthorization
@@ -185,6 +208,13 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
     ```
   - Request headers:
      - 'Authorization' - token (seller)
+    - Response body:
+    ```json
+    {
+       "id" : "string",
+       "name": "string"
+    }
+    ```
   - Responses:
      - 201 - Created
      - 401 - Unauthorization
@@ -198,6 +228,17 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
     - num - stock to add
   - Request headers:
      - 'Authorization' - token (seller)
+- Response body:
+  ```json
+   {
+      "id" : "string",
+      "name": "string",
+      "description": "string",
+      "price": "double",
+      "category":"string",
+      "stock": "integer"
+   }
+   ```
   - Responses:
      - 201 - Created
      - 401 - Unauthorization
@@ -222,6 +263,17 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
     - id - productId
   - Request headers:
      - 'Authorization' - token (seller)
+- Response body:
+   ```json
+    {
+       "id" : "string",
+       "name": "string",
+       "description": "string",
+       "price": "double",
+       "category":"string",
+       "stock": "integer"
+    }
+    ```
   - Responses:
      - 201 - Created
      - 401 - Unauthorization
@@ -277,10 +329,21 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
     - type - UserType (enum)
 - Request headers:
     - 'Authorization' - token (admin token)
+- Response body:
+   ```json
+    {
+       "id" : "string",
+       "firstName": "string",
+       "lastName": "string",
+       "email": "string",
+       "type":"string"
+    }
+    ```
 - Responses:
     - 201 - Created
     - 401 - Unauthorized
         - Incorrect token
+    - 404 - No user
 
 13. Add address information to user
 - HTTP Method: 'POST'
@@ -298,6 +361,20 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
     - id - userId
 - Request headers:
     - 'Authorization' - token (user)
+  - Response body:
+  ```json
+    {
+       "id": "string",
+       "firstName": "string",
+       "lastName": "string",
+       "email": "double",
+       "type":"string",
+       "street" : "string",
+       "city": "string",
+       "cityCode": "string",
+       "state" : "string"
+     }
+  ```
 - Responses:
     - 201 - Created
     - 401 - Unauthorization
@@ -362,6 +439,20 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
   ```
 - Request headers:
   - 'Authorization' - token (user token)
+- Response body:
+  ```json
+    {
+       "id": "string",
+       "firstName": "string",
+       "lastName": "string",
+       "email": "double",
+       "type":"string",
+       "street" : "string",
+       "city": "string",
+       "cityCode": "string",
+       "state" : "string"
+     }
+  ```
 - Responses:
     - 201 - Created
     - 401 
@@ -381,6 +472,16 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
   ```
 - Request headers:
     - 'Authorization' - token (user token)
+  - Response body:
+  ```json
+    {
+       "id": "string",
+       "firstName": "string",
+       "lastName": "string",
+       "email": "double",
+       "type":"string"
+     }
+  ```
 - Responses:
     - 202 - Accepted
     - 401
@@ -401,6 +502,15 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
   ```
 - Request param:
     - id - userId (id is generated on frontend with device information, so no loggin is needed for this)
+- Response body:
+  ```json
+    {
+       "id": "string",
+       "user": "string",
+       "products": "Map<product, count>",
+       "date": "date"
+     }
+  ```
 - Responses:
     - 201 - Created
 
@@ -443,6 +553,18 @@ OrderService recive shopping cart object and token values
      }
   ```
     - 'Authorization' - token (user token)
+- Responsebody:
+  ```json
+    {
+       "id": "string",
+       "user": "User",
+       "address": "Address",
+       "status":"OrderStatus (enum)",
+       "price": "double",
+       "dateTime" : "LocaldateTime",
+       "products": "Map<product, count>"
+     }
+  ```
 
 21. Order status change
 - HTTP Method: 'POST'
@@ -452,6 +574,18 @@ OrderService recive shopping cart object and token values
  - status - orderstatus (enum)
 - Request headers:
     - 'Authorization' - token (seller token)
+- Responsebody:
+```json
+  {
+     "id": "string",
+     "user": "User",
+     "address": "Address",
+     "status":"OrderStatus (enum)",
+     "price": "double",
+     "dateTime" : "LocaldateTime",
+     "products": "Map<product, count>"
+   }
+```
 - Responses:
     - 201 - Created
     - 401
@@ -479,6 +613,20 @@ OrderService recive shopping cart object and token values
 - Endpoint URL: '/api/seller/order/all'
 - Request header:
   - 'Authorization' - token (seller token)
+- Responsebody:
+```json
+[
+  {
+     "id": "string",
+     "user": "User",
+     "address": "Address",
+     "status":"OrderStatus (enum)",
+     "price": "double",
+     "dateTime" : "LocaldateTime",
+     "products": "Map<product, count>"
+   }
+]
+```
 - Responses:
   - 200 - OK 
 - 401 - Unauthorized
@@ -492,6 +640,18 @@ OrderService recive shopping cart object and token values
     - id - orderId
 - Request headers:
     - 'Authorization' - token (seller token)
+- Responsebody:
+```json
+  {
+     "id": "string",
+     "user": "User",
+     "address": "Address",
+     "status":"OrderStatus (enum)",
+     "price": "double",
+     "dateTime" : "LocaldateTime",
+     "products": "Map<product, count>"
+   }
+```
 - Responses:
     - 200 - Ok
     - 401

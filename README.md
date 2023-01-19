@@ -168,7 +168,7 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
     }
     ```
   - Request headers:
-     - 'Authorization' - token
+     - 'Authorization' - token (seller)
   - Responses:
      - 201 - Created
      - 401 - Unauthorization
@@ -184,7 +184,7 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
     }
     ```
   - Request headers:
-     - 'Authorization' - token
+     - 'Authorization' - token (seller)
   - Responses:
      - 201 - Created
      - 401 - Unauthorization
@@ -197,12 +197,14 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
     - id - productId
     - num - stock to add
   - Request headers:
-     - 'Authorization' - token
+     - 'Authorization' - token (seller)
   - Responses:
      - 201 - Created
      - 401 - Unauthorization
         -Incorrect token
-
+    - 404
+        - No product
+        - 
 9. Update product
   - HTTP Method: 'PATCH'
   - Endpoint URL: '/api/seller/product/update'
@@ -219,11 +221,13 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
   - Request param:
     - id - productId
   - Request headers:
-     - 'Authorization' - token
+     - 'Authorization' - token (seller)
   - Responses:
      - 201 - Created
      - 401 - Unauthorization
         -Incorrect token
+     - 404
+       - No product 
 
 10. Delete product
   - HTTP Method: 'DELETE'
@@ -231,11 +235,13 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
   - Request params:
     - id - productId
   - Request headers:
-    - 'Authorization' - token
+    - 'Authorization' - token (seller)
   - Responses:
     - 204 - No content
     - 401 - Unauthorized 
       - Incorrect token
+    - 404
+      - No product
 
 11. Delete category
   - HTTP Method: 'DELETE'
@@ -243,11 +249,13 @@ Online store Springboot REST API with MongoDB database and JWT authorization.
   - Request params:
     - id - categoryId
   - Request headers:
-    - 'Authorization' - token
+    - 'Authorization' - token (seller)
   - Responses:
     - 204 - No content
     - 401 - Unauthorized 
       - Incorrect token
+    - 404
+      - No product
 
 12. Delete user
 - HTTP Method: 'DELETE'
@@ -436,3 +444,58 @@ OrderService recive shopping cart object and token values
   ```
     - 'Authorization' - token (user token)
 
+21. Order status change
+- HTTP Method: 'POST'
+- Endpoint URL: '/api/seller/order/status'
+- Request param:
+ - id - orderId
+ - status - orderstatus (enum)
+- Request headers:
+    - 'Authorization' - token (seller token)
+- Responses:
+    - 201 - Created
+    - 401
+        - Unauthorized
+        - Incorrect token
+    - 404 - No order
+
+22. Delete order
+- HTTP Method: 'DELETE'
+- Endpoint URL: '/api/seller/order/delete'
+- Request params:
+    - id - orderId
+- Request headers:
+    - 'Authorization' - token (seller token)
+- Responses:
+    - 204 - No content
+    - 401 
+      - Unauthorized
+      - Incorrect token
+    - 404 
+     - No user
+
+23. Get all orders
+- Http Method: 'GET'
+- Endpoint URL: '/api/seller/order/all'
+- Request header:
+  - 'Authorization' - token (seller token)
+- Responses:
+  - 200 - OK 
+- 401 - Unauthorized
+  - Incorrect token
+  - 404 
+
+24. Get order info
+- Http Method: 'GET'
+- Endpoint URL: '/api/seller/order/info'
+- Request params:
+    - id - orderId
+- Request headers:
+    - 'Authorization' - token (seller token)
+- Responses:
+    - 200 - Ok
+    - 401
+        - Unauthorized
+        - Incorrect token
+    - 404
+      - No order

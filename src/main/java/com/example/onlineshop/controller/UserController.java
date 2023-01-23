@@ -1,6 +1,7 @@
 package com.example.onlineshop.controller;
 
 import com.example.onlineshop.entity.dto.*;
+import com.example.onlineshop.exception.OrderNotValid;
 import com.example.onlineshop.exception.TokenNotValid;
 import com.example.onlineshop.exception.UserNotExist;
 import com.example.onlineshop.service.UserService;
@@ -10,6 +11,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -51,5 +54,19 @@ public class UserController {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("password-change", "password-change");
         return new ResponseEntity<>(userService.changeUserPassword(token, id, userPasswordChangeDto), responseHeaders, HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/order/info")
+    public ResponseEntity<OrderDto> getOrderInfo(@RequestHeader("Authentication") String token, @RequestParam("id") String id) throws OrderNotValid, UserNotExist {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("order-info", "order-info");
+        return new ResponseEntity<>(userService.getOrderInfo(token, id), responseHeaders, HttpStatus.OK);
+    }
+
+    @GetMapping("/order/all")
+    public ResponseEntity<List<OrderDto>> getOrdersInfo(@RequestHeader("Authentication") String token) throws UserNotExist {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("order-info", "order-info");
+        return new ResponseEntity<>(userService.getOrdersInfo(token), responseHeaders, HttpStatus.OK);
     }
 }

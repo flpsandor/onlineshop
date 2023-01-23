@@ -10,6 +10,7 @@ import com.example.onlineshop.exception.TokenNotValid;
 import com.example.onlineshop.exception.UserNotExist;
 import com.example.onlineshop.mapper.OrderMapper;
 import com.example.onlineshop.repository.OrderRepository;
+import com.example.onlineshop.repository.ShoppingCartRepository;
 import com.example.onlineshop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class OrderService {
     private final JwtService jwtService;
 
     OrderMapper orderMapper = OrderMapper.INSTANCE;
+    private final ShoppingCartRepository shoppingCartRepository;
 
     public User extractEmail(String token) throws UserNotExist {
         var Claims = jwtService.extractAllClaims(token.substring(7));
@@ -52,6 +54,7 @@ public class OrderService {
         order.setOrderProducts(cart.getShoppingCartProducts());
         order.setOrderDateTime(LocalDateTime.now());
         order.setOrderPrice(countPriceForOrder(cart.getShoppingCartProducts()));
+        shoppingCartRepository.delete(cart);
         return orderMapper.orderToOrderDto(orderRepository.save(order));
     }
 }

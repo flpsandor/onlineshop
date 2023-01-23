@@ -662,3 +662,55 @@ OrderService recive shopping cart object and token values
         - Incorrect token
     - 404
       - No order
+
+25. Get order info (return order info created by user, authenticated by user)
+- Http Method: 'GET'
+- Endpoint URL: '/api/user/order/info'
+- Request params:
+    - id - orderId
+- Request headers:
+    - 'Authorization' - token (user token)
+- Responsebody:
+```json
+  {
+     "id": "string",
+     "user": "User",
+     "address": "Address",
+     "status":"OrderStatus (enum)",
+     "price": "double",
+     "dateTime" : "LocaldateTime",
+     "products": "Map<product, count>"
+   }
+```
+- Responses:
+    - 200 - Ok
+    - 401
+        - Unauthorized
+        - Incorrect token
+    - 404
+        - No order
+
+26. Get all orders (return list of orders info created by user, authenticated by user)
+- Http Method: 'GET'
+- Endpoint URL: '/api/user/order/all'
+- Request header:
+    - 'Authorization' - token (user token)
+- Responsebody:
+```json
+[
+  {
+     "id": "string",
+     "user": "User",
+     "address": "Address",
+     "status":"OrderStatus (enum)",
+     "price": "double",
+     "dateTime" : "LocaldateTime",
+     "products": "Map<product, count>"
+   }
+]
+```
+- Responses:
+    - 200 - OK
+    - 401 
+      - Unauthorized
+      - Incorrect token

@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.security.SignatureException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RestControllerAdvice
 public class ControllerAdvice {
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionDto> handleValidationArgument(MethodArgumentNotValidException exception) {
@@ -117,5 +117,10 @@ public class ControllerAdvice {
     @ExceptionHandler(PasswordNotMatch.class)
     public ResponseEntity<ExceptionDto> handlePasswordNotMatchException(PasswordNotMatch exception) {
         return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder().title("password problem").details(exception.getMessage()).status(HttpStatus.CONFLICT.value()).errorType(PasswordNotMatch.class.getSimpleName()).build(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(NotEnoughtStock.class)
+    public ResponseEntity<ExceptionDto> handleNotEnoguhtStock(NotEnoughtStock exception) {
+        return new ResponseEntity<>(ExceptionDto.builder().title("Not eneought product on stock").details(exception.getMessage()).status(HttpStatus.NOT_ACCEPTABLE.value()).errorType(NotEnoughtStock.class.getSimpleName()).build(), HttpStatus.NOT_ACCEPTABLE);
     }
 }

@@ -3,6 +3,7 @@ package com.example.onlineshop.controller;
 import com.example.onlineshop.entity.dto.OrderDto;
 import com.example.onlineshop.entity.dto.ShoppingCartCreationDto;
 import com.example.onlineshop.entity.dto.ShoppingCartDto;
+import com.example.onlineshop.exception.NotEnoughtStock;
 import com.example.onlineshop.exception.ShoppingCartNotExist;
 import com.example.onlineshop.exception.TokenNotValid;
 import com.example.onlineshop.exception.UserNotExist;
@@ -22,7 +23,7 @@ public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
 
     @PostMapping("/cart/add")
-    private ResponseEntity<ShoppingCartDto> addProductInCart(@RequestParam ("id") String id,  @Valid @RequestBody ShoppingCartCreationDto shoppingCartCreationDto){
+    private ResponseEntity<ShoppingCartDto> addProductInCart(@RequestParam ("id") String id,  @Valid @RequestBody ShoppingCartCreationDto shoppingCartCreationDto) throws NotEnoughtStock {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("item-in-cart", "item-in-cart");
         return new ResponseEntity<>(shoppingCartService.addProductInCart(id, shoppingCartCreationDto), responseHeaders, HttpStatus.CREATED);

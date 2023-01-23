@@ -1,9 +1,11 @@
 package com.example.onlineshop.service;
 
+import com.example.onlineshop.entity.document.Product;
 import com.example.onlineshop.entity.document.ShoppingCart;
 import com.example.onlineshop.entity.dto.OrderDto;
 import com.example.onlineshop.entity.dto.ShoppingCartCreationDto;
 import com.example.onlineshop.entity.dto.ShoppingCartDto;
+import com.example.onlineshop.exception.NotEnoughtStock;
 import com.example.onlineshop.exception.ShoppingCartNotExist;
 import com.example.onlineshop.exception.TokenNotValid;
 import com.example.onlineshop.exception.UserNotExist;
@@ -21,7 +23,14 @@ public class ShoppingCartService {
     private final OrderService orderService;
     ShoppingCartMapper shoppingCartMapper = ShoppingCartMapper.INSTANCE;
 
-    public ShoppingCartDto addProductInCart(String id, ShoppingCartCreationDto shoppingCartCreationDto){
+    private boolean isOnStock(Product product, Integer count) throws NotEnoughtStock {
+        if(product.getProductStock()<count){
+            throw new NotEnoughtStock();
+        }
+        return true;
+    }
+
+    public ShoppingCartDto addProductInCart(String id, ShoppingCartCreationDto shoppingCartCreationDto) throws NotEnoughtStock {
         var cart = shoppingCartRepository.findShoppingCartByShoppingCartUserInformation(id).orElse(new ShoppingCart());
         cart.setShoppingCartUserInformation(id);
         if (cart.getShoppingCartDate() != null) {
@@ -30,7 +39,9 @@ public class ShoppingCartService {
         var products = cart.getShoppingCartProducts();
         for (var product : cart.getShoppingCartProducts().entrySet()) {
             if (product.getKey().getProductId().equals(shoppingCartCreationDto.getProduct().getProductId())) {
-                products.replace(product.getKey(), shoppingCartCreationDto.getCount());
+                if(isOnStock(product.getKey(), shoppingCartCreationDto.getCount())){
+                    products.replace(product.getKey(), shoppingCartCreationDto.getCount());
+                }
             }
             products.put(shoppingCartCreationDto.getProduct(), shoppingCartCreationDto.getCount());
         }

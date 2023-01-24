@@ -2,6 +2,7 @@ package com.example.onlineshop.entity.document;
 
 
 import com.example.onlineshop.entity.enum_s.OrderStatus;
+import com.example.onlineshop.entity.pojo.CartProduct;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 
 import java.time.LocalDateTime;
-import java.util.Map;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -25,8 +26,7 @@ public class Order {
     private LocalDateTime orderDateTime;
     private OrderStatus orderStatus;
     private Double orderPrice;
-    @DBRef
-    private Map<Product, Integer> orderProducts;
+    private List<CartProduct> orderProducts;
     @DBRef
     private User orderUser;
 }

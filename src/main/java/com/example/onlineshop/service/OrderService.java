@@ -53,7 +53,8 @@ public class OrderService {
         order.setOrderStatus(OrderStatus.RECEIVED);
         order.setOrderProducts(cart.getShoppingCartProducts());
         order.setOrderDateTime(LocalDateTime.now());
-        order.setOrderPrice(countPriceForOrder(cart.getShoppingCartProducts()));
+        // fix this
+        // order.setOrderPrice(countPriceForOrder(cart.getShoppingCartProducts()));
         shoppingCartRepository.delete(cart);
         return orderMapper.orderToOrderDto(orderRepository.save(order));
     }

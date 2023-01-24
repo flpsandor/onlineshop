@@ -10,8 +10,9 @@ import org.mapstruct.factory.Mappers;
 public interface ShoppingCartMapper {
     ShoppingCartMapper INSTANCE = Mappers.getMapper(ShoppingCartMapper.class);
 
-    @Mapping(source="shoppingCartId", target="id")
+    @Mapping(source="shoppingCartId", target = "id")
     @Mapping(source="shoppingCartUserInformation", target = "user")
-    @Mapping(source="shoppingCartProducts", target="products")
+    @Mapping(target="products", source = "shoppingCartProducts")
+    @Mapping(target = "date", source = "shoppingCartDate")
     ShoppingCartDto shoppingCartToShoppingCartDto(ShoppingCart shoppingCart);
 }

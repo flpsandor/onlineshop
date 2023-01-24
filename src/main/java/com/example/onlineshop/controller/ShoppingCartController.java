@@ -33,7 +33,7 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/add-order")
-    private ResponseEntity<OrderDto> addOrder(@RequestHeader("Authorization") String token, @RequestParam("id") String id) throws ShoppingCartNotExist, TokenNotValid, UserNotExist {
+    private ResponseEntity<OrderDto> addOrder(@RequestHeader("Authorization") String token, @RequestParam("id") String id) throws ShoppingCartNotExist, TokenNotValid, UserNotExist, AddressInformationNotExist {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("order add", "order add");
         return new ResponseEntity<>(shoppingCartService.addOrder(token, id), responseHeaders, HttpStatus.CREATED);

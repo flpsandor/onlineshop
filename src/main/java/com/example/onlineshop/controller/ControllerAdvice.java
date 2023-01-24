@@ -32,6 +32,11 @@ public class ControllerAdvice {
         return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder().title("User type not valid").details(exception.getMessage()).status(HttpStatus.UNAUTHORIZED.value()).errorType(UserTypeNotValid.class.getSimpleName()).build(), HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(AddressInformationNotExist.class)
+    public ResponseEntity<ExceptionDto> handleAddressInformationNotExist(AddressInformationNotExist exception) {
+        return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder().title("Address information is not exist").details(exception.getMessage()).status(HttpStatus.NOT_FOUND.value()).errorType(AddressInformationNotExist.class.getSimpleName()).build(), HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(CategoryNotExist.class)
     public ResponseEntity<ExceptionDto> handleCategoryNotExistException(CategoryNotExist exception) {
         return new ResponseEntity<>(com.example.onlineshop.entity.dto.ExceptionDto.builder().title("Category not exist").details(exception.getMessage()).status(HttpStatus.NOT_FOUND.value()).errorType(CategoryNotExist.class.getSimpleName()).build(), HttpStatus.NOT_FOUND);

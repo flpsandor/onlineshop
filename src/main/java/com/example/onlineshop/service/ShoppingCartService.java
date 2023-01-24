@@ -44,11 +44,12 @@ public class ShoppingCartService {
     }
 
     public Boolean clearShoppingCart(String id) throws ShoppingCartNotExist {
-        shoppingCartRepository.findShoppingCartByShoppingCartUserInformation(id).orElseThrow(ShoppingCartNotExist::new);
+        var cart = shoppingCartRepository.findShoppingCartByShoppingCartUserInformation(id).orElseThrow(ShoppingCartNotExist::new);
+        shoppingCartRepository.delete(cart);
         return true;
     }
 
-    public OrderDto addOrder(String token, String id) throws ShoppingCartNotExist, TokenNotValid, UserNotExist {
+    public OrderDto addOrder(String token, String id) throws ShoppingCartNotExist, TokenNotValid, UserNotExist, AddressInformationNotExist {
         var cart = shoppingCartRepository.findShoppingCartByShoppingCartUserInformation(id).orElseThrow(ShoppingCartNotExist::new);
         return orderService.addOrder(token, cart);
     }

@@ -47,11 +47,8 @@ public class AuthenticationService {
     }
 
     //login
-    public TokenDto login(LoginDto login) throws UserNotExist, PasswordNotMatch {
+    public TokenDto login(LoginDto login) throws UserNotExist {
         var user = userRepository.findUserByUserEmail(login.getEmail()).orElseThrow(UserNotExist::new);
-        if(!user.getUserPassword().equals(login.getPassword())){
-            throw new PasswordNotMatch();
-        }
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         login.getEmail(),

@@ -1,4 +1,4 @@
-# ITBC-Logger
+# Online Shop
 Online store Springboot REST API with MongoDB database and JWT authorization.
 
 ## Business Requirements, MVP (Minimum Viable Product)
